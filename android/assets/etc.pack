@@ -1,0 +1,12 @@
+
+etc.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+battleIcon
+  rotate: false
+  xy: 1, 1
+  size: 225, 277
+  orig: 225, 277
+  offset: 0, 0
+  index: -1

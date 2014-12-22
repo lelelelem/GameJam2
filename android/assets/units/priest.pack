@@ -1,0 +1,19 @@
+
+priest.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+preview
+  rotate: false
+  xy: 1, 279
+  size: 380, 700
+  orig: 380, 700
+  offset: 0, 0
+  index: -1
+thumb
+  rotate: false
+  xy: 1, 1
+  size: 331, 276
+  orig: 331, 276
+  offset: 0, 0
+  index: -1

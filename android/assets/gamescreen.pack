@@ -1,0 +1,26 @@
+
+gamescreen.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+battleback
+  rotate: false
+  xy: 1, 68
+  size: 640, 320
+  orig: 640, 320
+  offset: 0, 0
+  index: -1
+target
+  rotate: false
+  xy: 1, 1
+  size: 88, 65
+  orig: 88, 65
+  offset: 0, 0
+  index: -1
+thumb-bg
+  rotate: false
+  xy: 643, 328
+  size: 67, 60
+  orig: 67, 60
+  offset: 0, 0
+  index: -1
