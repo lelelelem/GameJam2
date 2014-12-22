@@ -16,6 +16,10 @@ public class GJUnit extends GJClickableActor {
         return unitData;
     }
     
+    @Override
+    public void clickAction() {   
+    }
+    
 
 
 }

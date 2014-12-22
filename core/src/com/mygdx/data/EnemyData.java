@@ -16,6 +16,7 @@ public class EnemyData {
     private String unit_name;
     private String display_name;
     private String target_range;
+    private String coordinates;
     
     public void setUnit_id(int unit_id){
         this.unit_id = unit_id;
@@ -114,5 +115,12 @@ public void setTarget_range(String target_range) {
     this.target_range = target_range;
 }
 
+public String getCoordinates() {
+    return coordinates;
+}
+
+public void setCoordinates(String coordinates) {
+    this.coordinates = coordinates;
+}
 
 }

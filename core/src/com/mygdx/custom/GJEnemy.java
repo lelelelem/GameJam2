@@ -17,6 +17,9 @@ public class GJEnemy extends GJClickableActor {
         return enemyData;
     }
     
+    @Override
+    public void clickAction() {   
+    }
 
 
 }

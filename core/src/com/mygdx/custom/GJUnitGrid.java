@@ -70,6 +70,14 @@ public class GJUnitGrid extends Group{
         }
     }
     
+    public void addEnemy(GJEnemy enemy){
+        this.addActor(enemy);
+        enemy.setScale(0.4f, 0.4f);
+        enemy.setX(this.getWidth()/2 - enemy.getWidth()*enemy.getScaleX()/2);
+        enemy.setY(this.getHeight()/2);
+        enemy.setName("enemy");
+    }
+    
     public void toggle(){
         this.setVisible(true);
     }

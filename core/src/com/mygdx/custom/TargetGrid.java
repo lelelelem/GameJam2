@@ -100,5 +100,10 @@ public class TargetGrid extends Group {
         }
     }
     
+    public void addToSpecificGrid(String gridName, GJEnemy enemy){
+       Group tempG = (Group)this.findActor(gridName);
+        ((GJUnitGrid)tempG).addEnemy(enemy);
+    }
+    
    
 }

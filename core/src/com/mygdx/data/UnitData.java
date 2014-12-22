@@ -13,6 +13,7 @@ public class UnitData {
     private int vit;
     private int inte;
     
+    
     private String atk_range;
     private String unit_name;
     private String display_name;
@@ -114,6 +115,8 @@ public String getTarget_range() {
 public void setTarget_range(String target_range) {
     this.target_range = target_range;
 }
+
+
 
 
 }

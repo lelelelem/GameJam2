@@ -112,7 +112,7 @@ public class VolleyUtil extends GJVolley {
         for (int i =0; i<array.length(); i++){
             EnemyData unitData = new EnemyData();
             JSONObject obj = (JSONObject) array.get(i);
-            
+            unitData.setCoordinates(obj.getString("coordinates"));
             unitData.setUnit_id(obj.getInt("id"));        
             unitData.setUnit_name(obj.getString("name"));
             unitData.setDisplay_name(obj.getString("display_name"));

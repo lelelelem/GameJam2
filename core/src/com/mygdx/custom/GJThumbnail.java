@@ -23,6 +23,9 @@ public class GJThumbnail extends Group{
     //create Separate Actor in the future
     //will hold DAO
     private GJUnit unit;
+    
+    private GJEnemy enemy;
+    
     private float alpha = 1.0f;
     private boolean trigger = false;
     private boolean activated = true;
@@ -71,9 +74,15 @@ public class GJThumbnail extends Group{
         //TODO: change to enemies
         atlas = new TextureAtlas("enemies/"+enemyData.getUnit_name()+".pack");
         TextureRegion region = atlas.findRegion("thumb");
+        TextureRegion enemyRegion = atlas.findRegion("preview");
+        enemyRegion.flip(true, false);
+        
         this.setWidth(atlas.findRegion("thumb").getRegionWidth());
         this.setHeight(atlas.findRegion("thumb").getRegionHeight());
+        
+        this.enemy = new GJEnemy(enemyRegion, enemyData);
         region.flip(true, false);
+        
         thumbUnit = new GJActor(region);
         this.addActor(thumbUnit);
     }
@@ -104,6 +113,10 @@ public class GJThumbnail extends Group{
    
    public GJUnit getUnit(){
        return unit;
+   }
+   
+   public GJEnemy getEnemy(){
+       return enemy;
    }
    
    
