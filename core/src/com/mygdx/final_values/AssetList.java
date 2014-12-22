@@ -14,7 +14,7 @@ public class AssetList {
         ASSET_REDMAGE("redmage"),
         ASSET_VIKING("viking"),
         ASSET_WARRIOR("warrior"),
-        ASSET_BG_FIELD("battleback"),
+        ASSET_BG_FIELD("background"),
         ASSET_TARGET("target"),
         ASSET_THUMB_BG("thumb-bg"),
         ASSET_THUMB_FIGHTER("thumb-fighter");

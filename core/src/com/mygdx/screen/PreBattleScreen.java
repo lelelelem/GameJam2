@@ -53,12 +53,13 @@ public class PreBattleScreen extends GJScreen{
         unitGrid = new TargetGrid(this);
         enemyGrid = new  TargetGrid(this);
         
+        ectAtlas = new TextureAtlas(AssetList.Assets.ATLAS_ETC.getPath());
         preBattleAtlas = new TextureAtlas(AssetList.Assets.ATLAS_GAMESCREEN.getPath());
-        background = new GJActor(preBattleAtlas.findRegion(AssetList.Assets.ASSET_BG_FIELD.getPath()));
+        background = new GJActor(ectAtlas.findRegion(AssetList.Assets.ASSET_BG_FIELD.getPath()));
         background.setWidth((MyGdxGame.WIDTH/background.getWidth())*background.getWidth());
         background.setHeight((MyGdxGame.HEIGHT/background.getHeight())*background.getHeight());
         
-        ectAtlas = new TextureAtlas(AssetList.Assets.ATLAS_ETC.getPath());
+        
         battleIcon = new GJClickableActor(ectAtlas.findRegion(AssetList.Assets.ASSET_BATTLE_ICON.getPath())){
            @Override
             public void clickAction() {
@@ -108,10 +109,10 @@ public class PreBattleScreen extends GJScreen{
         stage.addActor(battleIcon);
         
         enemyGrid.setX(0);
-        enemyGrid.setY(100.0f);
+        enemyGrid.setY(80.0f);
         
         unitGrid.setX(MyGdxGame.WIDTH-unitGrid.getWidth());
-        unitGrid.setY(100.0f);
+        unitGrid.setY(80.0f);
         
         for (Actor actor:enemyGrid.getChildren()){
             actor.setVisible(false);
@@ -190,6 +191,6 @@ public class PreBattleScreen extends GJScreen{
     }
     
     private void toBattle(){
-        game.setScreen(new BattleScreen(game, unitGrid, enemyGrid));
+        game.setScreen(new BattleScreen(game, unitGrid, enemyGrid, background));
     }
 }

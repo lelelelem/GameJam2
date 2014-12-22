@@ -118,4 +118,8 @@ public class GJUnitGrid extends Group{
     public String[] getRange(){
         return range;
     }
+    
+    public void hideTargetCircle(){
+        targetGrid.setVisible(false);
+    }
 }

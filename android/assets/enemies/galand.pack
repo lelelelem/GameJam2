@@ -1,19 +1,19 @@
 
-etc.png
+galand.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-background
+preview
   rotate: false
-  xy: 1, 1
-  size: 512, 304
-  orig: 512, 304
+  xy: 1, 100
+  size: 301, 518
+  orig: 301, 518
   offset: 0, 0
   index: -1
-battleIcon
+thumb
   rotate: false
-  xy: 515, 28
-  size: 225, 277
-  orig: 225, 277
+  xy: 1, 1
+  size: 84, 97
+  orig: 84, 97
   offset: 0, 0
   index: -1

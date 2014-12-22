@@ -105,5 +105,11 @@ public class TargetGrid extends Group {
         ((GJUnitGrid)tempG).addEnemy(enemy);
     }
     
+    public void setUpForBattle(){
+        for(Actor actor:this.getChildren()){
+            ((GJUnitGrid)actor).hideTargetCircle();
+        }
+    }
+    
    
 }
