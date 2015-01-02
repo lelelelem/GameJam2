@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.final_values.AssetList;
 import com.mygdx.interfaces.PressCallback;
@@ -22,6 +23,7 @@ public class GJUnitGrid extends Group{
     private boolean isPressed = false;
     private PreBattleScreen preBattle;
     private GJUnit unit;
+    private GJEnemy enemy;
     private String range[];
     
     public GJUnitGrid(final String name, PreBattleScreen preBattle) {
@@ -29,10 +31,13 @@ public class GJUnitGrid extends Group{
         atlas = new TextureAtlas(AssetList.Assets.ATLAS_GAMESCREEN.getPath());
         targetCircle = atlas.findRegion(AssetList.Assets.ASSET_TARGET.getPath());
         
+        
         targetGrid = new GJActor(targetCircle);
         this.addActor(targetGrid);
-        this.setWidth(targetCircle.getRegionWidth());
-        this.setHeight(targetCircle.getRegionHeight());
+        targetGrid.setScale(0.7f);
+        
+        this.setWidth(targetCircle.getRegionWidth()*targetGrid.getScaleX());
+        this.setHeight(targetCircle.getRegionHeight()*targetGrid.getScaleY());
         this.setName(name);
         
         this.addListener(new ClickListener() {
@@ -72,10 +77,11 @@ public class GJUnitGrid extends Group{
     
     public void addEnemy(GJEnemy enemy){
         this.addActor(enemy);
-        enemy.setScale(0.4f, 0.4f);
         enemy.setX(this.getWidth()/2 - enemy.getWidth()*enemy.getScaleX()/2);
         enemy.setY(this.getHeight()/2);
         enemy.setName("enemy");
+        this.enemy = enemy;
+        plotTargetRangeEnemy();
     }
     
     public void toggle(){
@@ -96,9 +102,22 @@ public class GJUnitGrid extends Group{
         preBattle.getEnemyGrid().refreshGrid(TOGGLE);
     }
     
+    private void plotTargetRangeEnemy(){
+    	if (enemy==null){
+    		
+    	}
+    	else{
+    		range = enemy.getEnemyData().getTarget_range().split(",");
+    	}
+    }
+    
   
     public GJUnit getUnit(){
         return unit;
+    }
+    
+    public GJEnemy getEnemy(){
+    	return enemy;
     }
     
     public void callClearGrid(){

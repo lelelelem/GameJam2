@@ -9,7 +9,8 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 public class GJActor extends Actor {
 
     private Rectangle rectangle;
-    private TextureRegion texture;
+    protected TextureRegion texture;
+    
 
     public GJActor(TextureRegion image) {
         texture = image;
@@ -17,7 +18,7 @@ public class GJActor extends Actor {
         this.setWidth(texture.getRegionWidth());
         this.setHeight(texture.getRegionHeight());
     }
-
+    
     @Override
     public void draw(Batch batch, float parentAlpha) {
         batch.draw(texture, this.getX(), this.getY(), this.getOriginX(), this.getOriginY(), this.getWidth(), this.getHeight(), this.getScaleX(), this.getScaleY(), this.getRotation());

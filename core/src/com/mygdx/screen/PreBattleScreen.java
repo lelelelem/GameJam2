@@ -22,12 +22,11 @@ public class PreBattleScreen extends GJScreen{
     private GJThumbnail unitThumbnail[];
     private GJThumbnail enemyThumbnail[];
     
-    
-    private TextureAtlas preBattleAtlas;
     private TextureAtlas ectAtlas;
     
     private GJActor background;
     private GJClickableActor battleIcon;
+    
     private TargetGrid unitGrid;
     private TargetGrid enemyGrid;
     
@@ -53,8 +52,8 @@ public class PreBattleScreen extends GJScreen{
         unitGrid = new TargetGrid(this);
         enemyGrid = new  TargetGrid(this);
         
-        ectAtlas = new TextureAtlas(AssetList.Assets.ATLAS_ETC.getPath());
-        preBattleAtlas = new TextureAtlas(AssetList.Assets.ATLAS_GAMESCREEN.getPath());
+        ectAtlas = new TextureAtlas(AssetList.Assets.ATLAS_GAMESCREEN.getPath());
+        
         background = new GJActor(ectAtlas.findRegion(AssetList.Assets.ASSET_BG_FIELD.getPath()));
         background.setWidth((MyGdxGame.WIDTH/background.getWidth())*background.getWidth());
         background.setHeight((MyGdxGame.HEIGHT/background.getHeight())*background.getHeight());
@@ -76,6 +75,7 @@ public class PreBattleScreen extends GJScreen{
         
         int i = 0;
         
+        //setup unit thumbs
         for(UnitData unit: unitData){
             unitThumbnail[i] = new GJThumbnail(unit, new GJClickListenerInterface() {
                 @Override
@@ -94,6 +94,7 @@ public class PreBattleScreen extends GJScreen{
         
         i=0;
         
+        //setup enemy thumbs
         for(EnemyData enemy: enemyData){
             enemyThumbnail[i] = new GJThumbnail(enemy);
             enemyThumbs.addActor(enemyThumbnail[i]);

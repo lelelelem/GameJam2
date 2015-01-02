@@ -7,7 +7,7 @@ import com.mygdx.data.UnitData;
 import com.mygdx.screen.NetworkLoadingScreen;
 
 public abstract class GJVolley {
-    public static final String url = "http://grandknights.hol.es/grand_knights/battle/index";
+    public static final String url = "http://grandknights.hol.es/grand_knights/battle/index?world_id=1&world_seq=1&stage_part=1";
     protected List<UnitData> unitDAO;
     protected List<EnemyData> enemyDAO;
     

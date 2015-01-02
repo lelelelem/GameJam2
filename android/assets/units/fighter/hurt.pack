@@ -1,0 +1,130 @@
+
+hurt.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+1
+  rotate: false
+  xy: 1, 1
+  size: 574, 540
+  orig: 574, 540
+  offset: 0, 0
+  index: -1
+15
+  rotate: false
+  xy: 1, 1
+  size: 574, 540
+  orig: 574, 540
+  offset: 0, 0
+  index: -1
+10
+  rotate: false
+  xy: 577, 1
+  size: 574, 540
+  orig: 574, 540
+  offset: 0, 0
+  index: -1
+11
+  rotate: false
+  xy: 1153, 1
+  size: 574, 540
+  orig: 574, 540
+  offset: 0, 0
+  index: -1
+
+hurt2.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+12
+  rotate: false
+  xy: 1, 1
+  size: 574, 540
+  orig: 574, 540
+  offset: 0, 0
+  index: -1
+13
+  rotate: false
+  xy: 577, 1
+  size: 574, 540
+  orig: 574, 540
+  offset: 0, 0
+  index: -1
+14
+  rotate: false
+  xy: 1153, 1
+  size: 574, 540
+  orig: 574, 540
+  offset: 0, 0
+  index: -1
+
+hurt3.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+2
+  rotate: false
+  xy: 1, 1
+  size: 574, 540
+  orig: 574, 540
+  offset: 0, 0
+  index: -1
+3
+  rotate: false
+  xy: 577, 1
+  size: 574, 540
+  orig: 574, 540
+  offset: 0, 0
+  index: -1
+4
+  rotate: false
+  xy: 1153, 1
+  size: 574, 540
+  orig: 574, 540
+  offset: 0, 0
+  index: -1
+
+hurt4.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+5
+  rotate: false
+  xy: 1, 1
+  size: 574, 540
+  orig: 574, 540
+  offset: 0, 0
+  index: -1
+6
+  rotate: false
+  xy: 1, 1
+  size: 574, 540
+  orig: 574, 540
+  offset: 0, 0
+  index: -1
+7
+  rotate: false
+  xy: 577, 1
+  size: 574, 540
+  orig: 574, 540
+  offset: 0, 0
+  index: -1
+8
+  rotate: false
+  xy: 1153, 1
+  size: 574, 540
+  orig: 574, 540
+  offset: 0, 0
+  index: -1
+
+hurt5.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+9
+  rotate: false
+  xy: 1, 1
+  size: 574, 540
+  orig: 574, 540
+  offset: 0, 0
+  index: -1

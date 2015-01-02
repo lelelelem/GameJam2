@@ -1,7 +1,10 @@
 package com.mygdx.game.android.volley;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.xml.ws.Response;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -10,9 +13,9 @@ import org.json.JSONObject;
 import android.content.Context;
 import android.util.Log;
 
-import com.android.volley.Request.Method;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
+import com.android.volley.Response.ErrorListener;
+import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
@@ -52,7 +55,7 @@ public class VolleyUtil extends GJVolley {
         if (requestQueue == null)
             requestQueue = Volley.newRequestQueue(context);
         
-        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Method.GET, url, null, new Response.Listener<JSONObject>() {
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Method.PUBLIC, url, null, new Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
@@ -65,7 +68,7 @@ public class VolleyUtil extends GJVolley {
                 }
             }
 
-        }, new Response.ErrorListener() {
+        }, new ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.i("lem", "error " + error.getMessage());

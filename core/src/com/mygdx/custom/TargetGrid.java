@@ -48,7 +48,7 @@ public class TargetGrid extends Group {
         float col = 1;
         
         for (Actor actor:this.getChildren()){
-            actor.setX(this.getWidth()-(col*actor.getWidth()));
+            actor.setX(this.getWidth()-(col*actor.getWidth())-15.0f);
             actor.setY(this.getHeight()-(row*actor.getHeight()));
             if (col==3){
                 col =1;

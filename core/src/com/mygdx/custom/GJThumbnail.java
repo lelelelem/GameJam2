@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.data.EnemyData;
 import com.mygdx.data.UnitData;
+import com.mygdx.interfaces.AnimationListener;
 
 /*Will hold Data 
  * such as:
@@ -60,7 +61,7 @@ public class GJThumbnail extends Group{
     
     
     public GJThumbnail(UnitData unitData, GJClickListenerInterface clickListener){
-        atlas = new TextureAtlas("units/"+unitData.getUnit_name()+".pack");
+        atlas = new TextureAtlas("units/"+unitData.getUnit_name()+"/preview.pack");
         thumbUnit = new GJActor(atlas.findRegion("thumb"));
         this.setWidth(atlas.findRegion("thumb").getRegionWidth());
         this.setHeight(atlas.findRegion("thumb").getRegionHeight());
@@ -72,7 +73,7 @@ public class GJThumbnail extends Group{
     
     public GJThumbnail(EnemyData enemyData){
         //TODO: change to enemies
-        atlas = new TextureAtlas("enemies/"+enemyData.getUnit_name()+".pack");
+        atlas = new TextureAtlas("enemies/"+enemyData.getUnit_name()+"/preview.pack");
         TextureRegion region = atlas.findRegion("thumb");
         TextureRegion enemyRegion = atlas.findRegion("preview");
         enemyRegion.flip(true, false);
@@ -81,6 +82,7 @@ public class GJThumbnail extends Group{
         this.setHeight(atlas.findRegion("thumb").getRegionHeight());
         
         this.enemy = new GJEnemy(enemyRegion, enemyData);
+        enemy.setScale(0.13f);
         region.flip(true, false);
         
         thumbUnit = new GJActor(region);
@@ -91,7 +93,6 @@ public class GJThumbnail extends Group{
     public void draw(Batch batch, float parentAlpha) {
         batch.setColor(1, 1, 1, alpha);
         super.draw(batch, parentAlpha);
-        batch.setColor(1,1,1,1);
     }
      
    private void makeTransparent(){
