@@ -103,12 +103,7 @@ public class GJUnitGrid extends Group{
     }
     
     private void plotTargetRangeEnemy(){
-    	if (enemy==null){
-    		
-    	}
-    	else{
     		range = enemy.getEnemyData().getTarget_range().split(",");
-    	}
     }
     
   
