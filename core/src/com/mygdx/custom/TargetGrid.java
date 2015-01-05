@@ -69,11 +69,18 @@ public class TargetGrid extends Group {
         }
     }
     
-    public void clearGrid(String unitName, String toSkip){
+    public void removeAllEnemies(){
+    	for (Actor grid:this.getChildren()){
+            if(((GJUnitGrid)grid).getEnemy()!=null){
+                    ((GJUnitGrid)grid).clearEnemy(); 
+            }
+        }
+    }
+    
+    public void clearGrid(String unitName){
         for (Actor grid:this.getChildren()){
             if(((GJUnitGrid)grid).getUnit()!=null){
                 if(((GJUnitGrid)grid).getUnit().getUnitData().getUnit_name().equals(unitName)){
-                     
                     ((GJUnitGrid)grid).clearUnit();
                     FunctionHelper.computeTargetRange(GJUnitGrid.UNTOGGLE, ((GJUnitGrid)grid), preBattle);
                 }   

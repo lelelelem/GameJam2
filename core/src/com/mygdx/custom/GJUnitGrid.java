@@ -127,10 +127,17 @@ public class GJUnitGrid extends Group{
     
     public void callClearGrid(){
         if (preBattle.getTempUnit()!=null){
-            preBattle.getUnitGrid().clearGrid(preBattle.getTempUnit().getUnitData().getUnit_name(), this.getName());
+            preBattle.getUnitGrid().clearGrid(preBattle.getTempUnit().getUnitData().getUnit_name());
         }
     }
     
+    public void clearEnemy(){
+    	 if (this.findActor("enemy")!=null){
+             this.findActor("enemy").remove();
+         }
+         
+         enemy = null;
+    }
     public void clearUnit(){
         if (this.findActor("unit")!=null){
             this.findActor("unit").remove();

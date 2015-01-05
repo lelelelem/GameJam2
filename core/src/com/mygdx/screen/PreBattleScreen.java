@@ -66,7 +66,7 @@ public class PreBattleScreen extends GJScreen{
             }
            };
            
-           battleIcon.setScale(0.2f);
+           battleIcon.setScale(0.5f);
         
         int i = 0;
         
