@@ -73,7 +73,7 @@ public class TargetGrid extends Group {
         for (Actor grid:this.getChildren()){
             if(((GJUnitGrid)grid).getUnit()!=null){
                 if(((GJUnitGrid)grid).getUnit().getUnitData().getUnit_name().equals(unitName)){
-                    Gdx.app.log("lem", "clearing");
+                     
                     ((GJUnitGrid)grid).clearUnit();
                     FunctionHelper.computeTargetRange(GJUnitGrid.UNTOGGLE, ((GJUnitGrid)grid), preBattle);
                 }   

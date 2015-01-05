@@ -66,7 +66,6 @@ public class GJThumbnail extends Group{
         this.setWidth(atlas.findRegion("thumb").getRegionWidth());
         this.setHeight(atlas.findRegion("thumb").getRegionHeight());
         unit = new GJUnit(atlas.findRegion("preview"), unitData);
-        unit.setScale(0.13f);
         this.addActor(thumbUnit);
         this.addListener(new GJClickListener(clickListener));
     }
@@ -82,7 +81,7 @@ public class GJThumbnail extends Group{
         this.setHeight(atlas.findRegion("thumb").getRegionHeight());
         
         this.enemy = new GJEnemy(enemyRegion, enemyData);
-        enemy.setScale(0.13f);
+        enemy.setScale(0.25f);
         region.flip(true, false);
         
         thumbUnit = new GJActor(region);

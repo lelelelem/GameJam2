@@ -1,19 +1,19 @@
 
-ninja.png
+preview.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
 preview
   rotate: false
-  xy: 1, 279
-  size: 380, 700
-  orig: 380, 700
+  xy: 1, 249
+  size: 415, 536
+  orig: 415, 536
   offset: 0, 0
   index: -1
 thumb
   rotate: false
   xy: 1, 1
-  size: 331, 276
-  orig: 331, 276
+  size: 256, 246
+  orig: 256, 246
   offset: 0, 0
   index: -1

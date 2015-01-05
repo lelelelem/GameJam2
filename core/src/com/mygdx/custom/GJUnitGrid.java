@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.final_values.AssetList;
 import com.mygdx.interfaces.PressCallback;
 import com.mygdx.screen.PreBattleScreen;
+import com.mygdx.util.SHText;
 
 public class GJUnitGrid extends Group{
 
@@ -26,15 +27,19 @@ public class GJUnitGrid extends Group{
     private GJEnemy enemy;
     private String range[];
     
+    private SHText dmg;
+    
     public GJUnitGrid(final String name, PreBattleScreen preBattle) {
         this.preBattle = preBattle;
         atlas = new TextureAtlas(AssetList.Assets.ATLAS_GAMESCREEN.getPath());
         targetCircle = atlas.findRegion(AssetList.Assets.ASSET_TARGET.getPath());
         
-        
         targetGrid = new GJActor(targetCircle);
         this.addActor(targetGrid);
         targetGrid.setScale(0.7f);
+        
+        dmg = new SHText("", 0,0,SHText.Size.XLARGE,  Color.RED);
+        dmg.setVisible(false);
         
         this.setWidth(targetCircle.getRegionWidth()*targetGrid.getScaleX());
         this.setHeight(targetCircle.getRegionHeight()*targetGrid.getScaleY());
@@ -67,21 +72,26 @@ public class GJUnitGrid extends Group{
             callClearGrid();
             unit = preBattle.getTempUnit();
             this.addActor(unit);
-            unit.setScale(0.2f, 0.2f);
+            unit.setScale(0.25f);
             unit.setX(this.getWidth()/2 - unit.getWidth()*unit.getScaleX()/2);
             unit.setY(this.getHeight()/2);
             unit.setName("unit");
             plotTargetRange();
+            this.addActor(dmg);
+            dmg.setPosition(unit.getX()+((unit.getWidth()*unit.getScaleX())/2) - dmg.getWidth()/2, unit.getY()+((unit.getHeight()*unit.getScaleY())/2)-dmg.getHeight()/2);
         }
     }
     
     public void addEnemy(GJEnemy enemy){
         this.addActor(enemy);
+        enemy.setScale(0.25f);
         enemy.setX(this.getWidth()/2 - enemy.getWidth()*enemy.getScaleX()/2);
         enemy.setY(this.getHeight()/2);
         enemy.setName("enemy");
         this.enemy = enemy;
         plotTargetRangeEnemy();
+        this.addActor(dmg);
+        dmg.setPosition(enemy.getX()+((enemy.getWidth()*enemy.getScaleX())/2) - dmg.getWidth()/2, enemy.getY()+((enemy.getHeight()*enemy.getScaleY())/2)-dmg.getHeight()/2);
     }
     
     public void toggle(){
@@ -98,7 +108,7 @@ public class GJUnitGrid extends Group{
         }
         
         range= unit.getUnitData().getTarget_range().split(",");
-        Gdx.app.log("lem", "range current "+range.length);
+         
         preBattle.getEnemyGrid().refreshGrid(TOGGLE);
     }
     
@@ -136,4 +146,16 @@ public class GJUnitGrid extends Group{
     public void hideTargetCircle(){
         targetGrid.setVisible(false);
     }
+    
+    public void showDamage(String damage){
+        dmg.setVisible(true);
+        dmg.setText(damage);
+        dmg.addAction(Actions.sequence(Actions.fadeIn(0.2f), Actions.fadeOut(0.8f), Actions.run(new Runnable() {
+            @Override
+            public void run() {
+              dmg.setVisible(false);
+            }
+        })));
+    }
+    
 }

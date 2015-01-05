@@ -1,0 +1,110 @@
+
+hurt.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+1
+  rotate: false
+  xy: 1, 1071
+  size: 391, 531
+  orig: 592, 648
+  offset: 114, 91
+  index: -1
+15
+  rotate: false
+  xy: 1, 538
+  size: 391, 531
+  orig: 592, 648
+  offset: 114, 91
+  index: -1
+10
+  rotate: false
+  xy: 394, 1054
+  size: 367, 548
+  orig: 592, 648
+  offset: 165, 91
+  index: -1
+14
+  rotate: false
+  xy: 1, 1
+  size: 378, 535
+  orig: 592, 648
+  offset: 123, 91
+  index: -1
+9
+  rotate: false
+  xy: 763, 1054
+  size: 365, 548
+  orig: 592, 648
+  offset: 161, 91
+  index: -1
+8
+  rotate: false
+  xy: 1130, 1054
+  size: 364, 548
+  orig: 592, 648
+  offset: 156, 91
+  index: -1
+7
+  rotate: false
+  xy: 1496, 1054
+  size: 363, 548
+  orig: 592, 648
+  offset: 152, 91
+  index: -1
+2
+  rotate: false
+  xy: 394, 528
+  size: 375, 524
+  orig: 592, 648
+  offset: 127, 91
+  index: -1
+13
+  rotate: false
+  xy: 771, 514
+  size: 367, 538
+  orig: 592, 648
+  offset: 133, 91
+  index: -1
+11
+  rotate: false
+  xy: 1140, 507
+  size: 365, 545
+  orig: 592, 648
+  offset: 154, 91
+  index: -1
+12
+  rotate: false
+  xy: 1507, 510
+  size: 363, 542
+  orig: 592, 648
+  offset: 143, 91
+  index: -1
+3
+  rotate: false
+  xy: 381, 11
+  size: 364, 515
+  orig: 592, 648
+  offset: 142, 91
+  index: -1
+4
+  rotate: false
+  xy: 747, 4
+  size: 355, 508
+  orig: 592, 648
+  offset: 154, 91
+  index: -1
+5
+  rotate: false
+  xy: 1104, 3
+  size: 345, 502
+  orig: 592, 648
+  offset: 168, 91
+  index: -1
+6
+  rotate: false
+  xy: 1104, 3
+  size: 345, 502
+  orig: 592, 648
+  offset: 168, 91
+  index: -1

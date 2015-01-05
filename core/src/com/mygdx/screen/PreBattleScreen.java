@@ -14,13 +14,13 @@ import com.mygdx.custom.GJThumbnail.GJClickListenerInterface;
 import com.mygdx.custom.GJUnit;
 import com.mygdx.custom.TargetGrid;
 import com.mygdx.data.EnemyData;
+import com.mygdx.data.StageData;
 import com.mygdx.data.UnitData;
 import com.mygdx.final_values.AssetList;
 import com.mygdx.game.MyGdxGame;
 
 public class PreBattleScreen extends GJScreen{
     private GJThumbnail unitThumbnail[];
-    private GJThumbnail enemyThumbnail[];
     
     private TextureAtlas ectAtlas;
     
@@ -31,23 +31,23 @@ public class PreBattleScreen extends GJScreen{
     private TargetGrid enemyGrid;
     
     private Group unitThumbs;
-    private Group enemyThumbs;
     
     private GJUnit tempUnit;
     private boolean hasSelected = false;
     private MyGdxGame game;
     
+    private List<StageData> stages;
     
-    public PreBattleScreen(MyGdxGame game, List<UnitData> unitData, List<EnemyData> enemyData) {
+    
+    public PreBattleScreen(MyGdxGame game, List<UnitData> unitData, List<StageData> stages) {
         super(game);
-        
+       
+        this.stages = stages;
         this.game = game;
         
         unitThumbs = new Group();
         unitThumbnail = new GJThumbnail[unitData.size()];
         
-        enemyThumbs = new Group();
-        enemyThumbnail = new GJThumbnail[enemyData.size()];
        
         unitGrid = new TargetGrid(this);
         enemyGrid = new  TargetGrid(this);
@@ -61,12 +61,7 @@ public class PreBattleScreen extends GJScreen{
         
         battleIcon = new GJClickableActor(ectAtlas.findRegion(AssetList.Assets.ASSET_BATTLE_ICON.getPath())){
            @Override
-            public void clickAction() {
-               
-               for(GJThumbnail thumb:enemyThumbnail){
-                   enemyGrid.addToSpecificGrid(thumb.getEnemy().getEnemyData().getCoordinates(), thumb.getEnemy());
-               }
-               
+            public void clickAction() {   
                toBattle();
             }
            };
@@ -94,30 +89,19 @@ public class PreBattleScreen extends GJScreen{
         
         i=0;
         
-        //setup enemy thumbs
-        for(EnemyData enemy: enemyData){
-            enemyThumbnail[i] = new GJThumbnail(enemy);
-            enemyThumbs.addActor(enemyThumbnail[i]);
-            i++;
-        }
-        
-        
+    
         stage.addActor(background);
         stage.addActor(unitGrid);
         stage.addActor(enemyGrid);
         stage.addActor(unitThumbs);
-        stage.addActor(enemyThumbs);
         stage.addActor(battleIcon);
         
-        enemyGrid.setX(0);
+        enemyGrid.setX(0+20.0f);
         enemyGrid.setY(80.0f);
         
         unitGrid.setX(MyGdxGame.WIDTH-unitGrid.getWidth());
         unitGrid.setY(80.0f);
-        
-        for (Actor actor:enemyGrid.getChildren()){
-            actor.setVisible(false);
-        }
+      
         
         float spacing = 0.0f;
         
@@ -137,22 +121,6 @@ public class PreBattleScreen extends GJScreen{
         unitThumbs.setY(20.0f);
         
          spacing = 0.0f;
-        
-        for(GJThumbnail thumb:enemyThumbnail){
-            thumb.setScaleX((unitThumbnail[0].getWidth())/thumb.getWidth());
-            thumb.setScaleY((unitThumbnail[0].getHeight())/thumb.getHeight());
-            
-            thumb.setWidth(thumb.getWidth()*thumb.getScaleX());
-            thumb.setHeight(thumb.getHeight()*thumb.getScaleY());
-            
-            thumb.setX(spacing);
-            spacing= thumb.getX() + (thumb.getWidth()*thumb.getScaleX()+50.0f);
-        }
-        
-        enemyThumbs.setWidth(spacing);
-        enemyThumbs.setX(0);
-        enemyThumbs.setY(MyGdxGame.HEIGHT/2);
-      
         Gdx.input.setInputProcessor(stage);
     }
     
@@ -192,6 +160,6 @@ public class PreBattleScreen extends GJScreen{
     }
     
     private void toBattle(){
-        game.setScreen(new BattleScreen(game, unitGrid, enemyGrid, background));
+        game.setScreen(new BattleScreen(game, unitGrid, enemyGrid, background, stages));
     }
 }

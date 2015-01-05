@@ -23,7 +23,7 @@ public class LRUFontCache {
 
     public static void initAll() {
         dispose();
-        Gdx.app.log(TAG, "Init All - Set Capacity to " + SHText.Size.values().length);
+         
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("font/LuckiestGuy.ttf"));
         BitmapFont tmpBitmapFont;
         MAX_CACHE_SIZE = SHText.Size.values().length;
@@ -54,16 +54,16 @@ public class LRUFontCache {
     }
 
     public static synchronized void put(String key, BitmapFont elem) {
-        Gdx.app.log(TAG, "Cached font - INSERT");
+         
         getCache().cacheMap.put(key, elem);
     }
 
     public static synchronized BitmapFont get(String key) {
         BitmapFont bitmapfont = getCache().cacheMap.get(key);
         if (bitmapfont == null) {
-            Gdx.app.log(TAG, "Cached font - MISS");
+             
         } else {
-            Gdx.app.log(TAG, "Cached font - HIT.");
+             
         }
         return bitmapfont;
     }

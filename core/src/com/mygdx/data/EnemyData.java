@@ -3,6 +3,10 @@ package com.mygdx.data;
 
 public class EnemyData {
     
+    private int atk;
+    private int def;
+    private int hp;
+    
     private int unit_id;
     private int class_id;
     private int burst;
@@ -121,6 +125,30 @@ public String getCoordinates() {
 
 public void setCoordinates(String coordinates) {
     this.coordinates = coordinates;
+}
+
+public int getAtk() {
+    return atk;
+}
+
+public void setAtk(int atk) {
+    this.atk = atk;
+}
+
+public int getDef() {
+    return def;
+}
+
+public void setDef(int def) {
+    this.def = def;
+}
+
+public int getHp() {
+    return hp;
+}
+
+public void setHp(int hp) {
+    this.hp = hp;
 }
 
 }

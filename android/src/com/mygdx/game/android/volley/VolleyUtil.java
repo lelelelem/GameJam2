@@ -21,6 +21,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.badlogic.gdx.Gdx;
 import com.mygdx.data.EnemyData;
+import com.mygdx.data.StageData;
 import com.mygdx.data.UnitData;
 import com.mygdx.interfaces.GJVolley;
 import com.mygdx.screen.NetworkLoadingScreen;
@@ -29,7 +30,6 @@ public class VolleyUtil extends GJVolley {
     
     public static final int GET_UNIT = 0;
     public static final int GET_ENEMY = 1;
-    
     
     private Context context;
     private RequestQueue requestQueue;
@@ -60,10 +60,10 @@ public class VolleyUtil extends GJVolley {
             public void onResponse(JSONObject response) {
                 try {
                     unitDAO = setupDAO(response);
-                    enemyDAO = setupEnemyDAO(response);
+                    stages = obtainStages(response);
                     loadScreen.hasLoaded();
                 } catch (JSONException e) {
-                    Gdx.app.log("lem", "fail");
+                     
                     e.printStackTrace();
                 }
             }
@@ -82,12 +82,15 @@ public class VolleyUtil extends GJVolley {
         
         JSONArray array = jsonObj.getJSONArray("units");
         Log.i("lem","fetching data");
-        Gdx.app.log("data", "lem "+array.toString());
+         
         
         for (int i =0; i<array.length(); i++){
             UnitData unitData = new UnitData();
             JSONObject obj = (JSONObject) array.get(i);
             
+            unitData.setAtk(obj.getInt("atk"));
+            unitData.setDef(obj.getInt("def"));
+            unitData.setHp(obj.getInt("hp"));
             unitData.setUnit_id(obj.getInt("id"));        
             unitData.setUnit_name(obj.getString("name"));
             unitData.setDisplay_name(obj.getString("display_name"));
@@ -105,31 +108,44 @@ public class VolleyUtil extends GJVolley {
         return unitList;
     }
     
-    private synchronized List<EnemyData> setupEnemyDAO(JSONObject jsonObj) throws JSONException{
-        List<EnemyData> unitList  = new ArrayList<EnemyData>();
+    private synchronized List<StageData> obtainStages(JSONObject jsonObj) throws JSONException{
+        List<StageData> stageList  = new ArrayList<StageData>();
         
-        JSONArray array = jsonObj.getJSONArray("enemy_units");
+        JSONObject world_info = jsonObj.getJSONObject("world_info");
+        JSONArray array = world_info.getJSONArray("stages");
         Log.i("lem","fetching data");
-        Gdx.app.log("data", "lem "+array.toString());
-        
+         
         for (int i =0; i<array.length(); i++){
-            EnemyData unitData = new EnemyData();
+            StageData stage = new StageData();
             JSONObject obj = (JSONObject) array.get(i);
-            unitData.setCoordinates(obj.getString("coordinates"));
-            unitData.setUnit_id(obj.getInt("id"));        
-            unitData.setUnit_name(obj.getString("name"));
-            unitData.setDisplay_name(obj.getString("display_name"));
-            unitData.setClass_id(obj.getInt("class_id"));
-            unitData.setInte(obj.getInt("int"));
-            unitData.setLevel(obj.getInt("current_lvl"));
-            unitData.setAgi(obj.getInt("agi"));
-            unitData.setStr(obj.getInt("str"));
-            unitData.setVit(obj.getInt("vit"));
-            unitData.setBurst(obj.getInt("burst"));
-            unitData.setTarget_range(obj.getString("target_range"));
-            unitList.add(unitData);
+            
+            stage.setStage_id(obj.getInt("stage_part"));
+            JSONArray enemyData = obj.getJSONArray("enemy_units");
+            
+            for (int j=0; j<enemyData.length();j++){
+                EnemyData unitData = new EnemyData();
+                
+                unitData.setAtk(enemyData.getJSONObject(j).getInt("atk"));
+                unitData.setDef(enemyData.getJSONObject(j).getInt("def"));
+                unitData.setHp(enemyData.getJSONObject(j).getInt("hp"));
+                unitData.setCoordinates(enemyData.getJSONObject(j).getString("coordinates"));
+                unitData.setUnit_id(enemyData.getJSONObject(j).getInt("id"));        
+                unitData.setUnit_name(enemyData.getJSONObject(j).getString("name"));
+                unitData.setDisplay_name(enemyData.getJSONObject(j).getString("display_name"));
+                unitData.setClass_id(enemyData.getJSONObject(j).getInt("class_id"));
+                unitData.setInte(enemyData.getJSONObject(j).getInt("int"));
+                unitData.setLevel(enemyData.getJSONObject(j).getInt("current_lvl"));
+                unitData.setAgi(enemyData.getJSONObject(j).getInt("agi"));
+                unitData.setStr(enemyData.getJSONObject(j).getInt("str"));
+                unitData.setVit(enemyData.getJSONObject(j).getInt("vit"));
+                unitData.setBurst(enemyData.getJSONObject(j).getInt("burst"));
+                unitData.setTarget_range(enemyData.getJSONObject(j).getString("target_range"));
+                
+                stage.addEnemies(unitData);
+            }
+            stageList.add(stage);
         }
         
-        return unitList;
+        return stageList;
     }
 }

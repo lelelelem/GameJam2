@@ -33,9 +33,7 @@ public class NetworkLoadingScreen extends GJScreen{
     @Override
     public void render(float delta) {
     	elapsed += delta;
-    	Gdx.app.log("lem", "int");
-    	if (elapsed >= Gdx.graphics.getDeltaTime()){
-    		Gdx.app.log("lem", ctr+"");
+    	if (elapsed >= 0.05f){
     		switch(ctr){
     		case 0:
     			loading.setText("Loading..");
@@ -46,16 +44,19 @@ public class NetworkLoadingScreen extends GJScreen{
     			ctr++;
     			break;
     		case 2:
-    			loading.setText("Loading.");
-    			ctr=0;
+    			loading.setText("Loading");
     			break;
+    		case 3:
+    		    loading.setText("Loading.");
+    		    ctr=0;
+    		    break;
     		}
     		elapsed = 0.0f;
     	}
     	
     	
         if (hasLoaded){
-            game.setScreen(new PreBattleScreen(game, game.getVolleyInstance().getUnits(), game.getVolleyInstance().getEnemy()));
+            game.setScreen(new PreBattleScreen(game, game.getVolleyInstance().getUnits(), game.getVolleyInstance().getStages()));
         }
             
         super.render(delta);

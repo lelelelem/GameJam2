@@ -1,14 +1,8 @@
 package com.mygdx.custom;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.data.UnitData;
-import com.mygdx.interfaces.AnimationListener;
 
 public class GJUnit extends GJAnimatingActor {
 
@@ -27,9 +21,11 @@ public class GJUnit extends GJAnimatingActor {
 
 		atkFrames = new TextureRegion[atkSheet.getRegions().size];
 		hurtFrames = new TextureRegion[hurtSheet.getRegions().size];
+		deadFrames = new TextureRegion[deadSheet.getRegions().size];
 
 		loadAnimationFrames(atkFrames, atkSheet);
 		loadAnimationFrames(hurtFrames, hurtSheet);
+		loadAnimationFrames(deadFrames, deadSheet);
 		
 	}
 
@@ -37,10 +33,10 @@ public class GJUnit extends GJAnimatingActor {
 		return unitData;
 	}
 	
-	public void loadAnimationFrames(TextureRegion[] textureFrames, TextureAtlas atlas){
-		for (int x = 0; x<textureFrames.length; x++){
-			textureFrames[x] = atlas.findRegion(Integer.toString(x + 1));
-		}
-	}
-
+	 @Override
+	    public void loadAnimationFrames(TextureRegion[] textureFrames, TextureAtlas atlas) {
+	        for (int x = 0; x < textureFrames.length; x++) {
+	            textureFrames[x] = atlas.findRegion(Integer.toString(x + 1));
+	        }
+	    }
 }
