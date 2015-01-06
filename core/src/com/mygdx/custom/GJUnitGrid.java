@@ -2,6 +2,8 @@ package com.mygdx.custom;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Group;
@@ -20,20 +22,30 @@ public class GJUnitGrid extends Group{
     
     private GJActor targetGrid;
     private TextureRegion targetCircle;
+    
+    private GJActor effect;
+    private TextureRegion effectTexture;
+    private float expired = 0.0f;
     private TextureAtlas atlas;
     private boolean isPressed = false;
     private PreBattleScreen preBattle;
     private GJUnit unit;
     private GJEnemy enemy;
     private String range[];
+    private Animation animation;
+    private boolean hasAnimationPlaying = true;
     
     private SHText dmg;
     
     public GJUnitGrid(final String name, PreBattleScreen preBattle) {
         this.preBattle = preBattle;
+        
+       
+        
         atlas = new TextureAtlas(AssetList.Assets.ATLAS_GAMESCREEN.getPath());
         targetCircle = atlas.findRegion(AssetList.Assets.ASSET_TARGET.getPath());
-        
+        effect = new GJActor(atlas.findRegion(AssetList.Assets.ASSET_TARGET.getPath()));
+        effect.setVisible(false);
         targetGrid = new GJActor(targetCircle);
         this.addActor(targetGrid);
         targetGrid.setScale(0.7f);
@@ -62,10 +74,34 @@ public class GJUnitGrid extends Group{
     }
     
     @Override
-    public void act(float delta) {
-    
-        super.act(delta);
+    public void draw(Batch batch, float parentAlpha) {
+        super.draw(batch, parentAlpha);
+        if (!hasAnimationPlaying){
+                playAnimation();
+        }
     }
+    
+    public void playAnimation() {
+        expired += Gdx.graphics.getDeltaTime();
+        effectTexture = animation.getKeyFrame(expired, false);
+        effect.setTexture(effectTexture);
+        effect.setWidth(effectTexture.getRegionWidth());
+        effect.setHeight(effectTexture.getRegionHeight());
+        
+        if (animation.getAnimationDuration() <= expired) {
+            expired = 0.0f;
+            hasAnimationPlaying = true;
+            effect.setVisible(false);
+        }
+    }
+    
+    public void startPlayAnimation(Animation animation){
+        this.animation = animation;
+        hasAnimationPlaying = false;
+        effect.setVisible(true);
+    }
+  
+    
     
     public void addUnit(){
         if (preBattle.getTempUnit() != null){
@@ -79,6 +115,8 @@ public class GJUnitGrid extends Group{
             plotTargetRange();
             this.addActor(dmg);
             dmg.setPosition(unit.getX()+((unit.getWidth()*unit.getScaleX())/2) - dmg.getWidth()/2, unit.getY()+((unit.getHeight()*unit.getScaleY())/2)-dmg.getHeight()/2);
+            this.addActor(effect);
+            effect.setPosition((unit.getX()+((unit.getWidth()*unit.getScaleX())/2))-effect.getWidth()/2, (unit.getY()+((unit.getHeight()*unit.getScaleY())/2))-effect.getHeight()/2);
         }
     }
     
@@ -92,6 +130,8 @@ public class GJUnitGrid extends Group{
         plotTargetRangeEnemy();
         this.addActor(dmg);
         dmg.setPosition(enemy.getX()+((enemy.getWidth()*enemy.getScaleX())/2) - dmg.getWidth()/2, enemy.getY()+((enemy.getHeight()*enemy.getScaleY())/2)-dmg.getHeight()/2);
+        this.addActor(effect);
+        effect.setPosition((enemy.getX()+((enemy.getWidth()*enemy.getScaleX())/2))-effect.getWidth()/2, (enemy.getY()+((enemy.getHeight()*enemy.getScaleY())/2))-effect.getHeight()/2);
     }
     
     public void toggle(){

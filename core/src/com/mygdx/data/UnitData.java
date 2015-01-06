@@ -7,6 +7,7 @@ public class UnitData {
     private int atk;
     private int def;
     private int hp;
+    private int atkEffect;
     
     private int unit_id;
     private int class_id;
@@ -141,6 +142,14 @@ public int getHp() {
 
 public void setHp(int hp) {
     this.hp = hp;
+}
+
+public int getAtkEffect() {
+    return atkEffect;
+}
+
+public void setAtkEffect(int atkEffect) {
+    this.atkEffect = atkEffect;
 }
 
 

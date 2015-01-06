@@ -87,7 +87,8 @@ public class VolleyUtil extends GJVolley {
         for (int i =0; i<array.length(); i++){
             UnitData unitData = new UnitData();
             JSONObject obj = (JSONObject) array.get(i);
-            
+            unitData.setAtkEffect(obj.getInt("atk_effect"));
+            Gdx.app.log("lem", "ef"+unitData.getAtkEffect());
             unitData.setAtk(obj.getInt("atk"));
             unitData.setDef(obj.getInt("def"));
             unitData.setHp(obj.getInt("hp"));
@@ -124,7 +125,8 @@ public class VolleyUtil extends GJVolley {
             
             for (int j=0; j<enemyData.length();j++){
                 EnemyData unitData = new EnemyData();
-                
+                unitData.setAtkEffect(enemyData.getJSONObject(j).getInt("atk_effect"));
+                Gdx.app.log("lem", "ef"+unitData.getAtkEffect());
                 unitData.setAtk(enemyData.getJSONObject(j).getInt("atk"));
                 unitData.setDef(enemyData.getJSONObject(j).getInt("def"));
                 unitData.setHp(enemyData.getJSONObject(j).getInt("hp"));

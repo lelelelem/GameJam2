@@ -5,15 +5,15 @@ filter: Nearest,Nearest
 repeat: none
 preview
   rotate: false
-  xy: 1, 243
-  size: 393, 528
-  orig: 393, 528
-  offset: 0, 0
+  xy: 1, 256
+  size: 311, 517
+  orig: 414, 534
+  offset: 47, 0
   index: -1
 thumb
   rotate: false
   xy: 1, 1
-  size: 294, 240
-  orig: 294, 240
+  size: 270, 253
+  orig: 318, 264
   offset: 0, 0
   index: -1

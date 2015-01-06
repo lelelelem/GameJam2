@@ -62,6 +62,10 @@ public class GJActor extends Actor {
     public void setPosition(Vector2 postition) {
         setPosition(postition.x, postition.y);
     }
+    
+    public void setTexture(TextureRegion texture){
+        this.texture = texture;
+    }
 
 
 }

@@ -12,6 +12,9 @@ public class GJUnit extends GJAnimatingActor {
 		super(image);
 		this.unitData = unitData;
 		idle = image;
+		
+		update();
+		
 		hurtSheet = new TextureAtlas("units/" + unitData.getUnit_name()
 				+ "/hurt.pack");
 		atkSheet = new TextureAtlas("units/" + unitData.getUnit_name()
@@ -39,4 +42,9 @@ public class GJUnit extends GJAnimatingActor {
 	            textureFrames[x] = atlas.findRegion(Integer.toString(x + 1));
 	        }
 	    }
+
+    @Override
+    protected int effectType() {
+        return unitData.getAtkEffect();
+    }
 }

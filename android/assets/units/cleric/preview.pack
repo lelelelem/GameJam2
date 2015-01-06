@@ -1,19 +1,19 @@
 
-priest.png
+preview.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
 preview
   rotate: false
-  xy: 1, 279
-  size: 380, 700
-  orig: 380, 700
-  offset: 0, 0
+  xy: 1, 250
+  size: 265, 568
+  orig: 301, 598
+  offset: 22, 0
   index: -1
 thumb
   rotate: false
   xy: 1, 1
-  size: 331, 276
-  orig: 331, 276
-  offset: 0, 0
+  size: 241, 247
+  orig: 295, 247
+  offset: 40, 0
   index: -1

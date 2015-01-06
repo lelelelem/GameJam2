@@ -3,6 +3,7 @@ package com.mygdx.custom;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.data.EnemyData;
+import com.mygdx.data.UnitData;
 
 public class GJEnemy extends GJAnimatingActor {
     
@@ -14,7 +15,7 @@ public class GJEnemy extends GJAnimatingActor {
 		this.enemyData = enemyData;
 		
 		idle = image;
-		
+		update();
 		hurtSheet = new TextureAtlas("enemies/" + enemyData.getUnit_name()
 				+ "/hurt.pack");
 		atkSheet = new TextureAtlas("enemies/" + enemyData.getUnit_name()
@@ -42,5 +43,12 @@ public class GJEnemy extends GJAnimatingActor {
             textureFrames[x].flip(true, false);
         }
     }
+
+    @Override
+    protected int effectType() {
+        return enemyData.getAtkEffect();
+    }
+    
+    
    
 }

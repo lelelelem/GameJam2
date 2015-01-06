@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.mygdx.interfaces.GJVolley;
+import com.mygdx.screen.MapScreen;
 import com.mygdx.screen.NetworkLoadingScreen;
 import com.mygdx.screen.PreBattleScreen;
 

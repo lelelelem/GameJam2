@@ -1,3 +1,4 @@
+
 package com.mygdx.screen;
 
 import java.util.ArrayList;
@@ -26,308 +27,311 @@ import com.mygdx.game.MyGdxGame;
 import com.mygdx.interfaces.AnimationListener;
 import com.mygdx.util.SHText;
 
+
 public class BattleScreen extends GJScreen {
 
-	private boolean hasAnimationPlaying = false;
+    private boolean hasAnimationPlaying = false;
 
-	private TargetGrid unitGrid;
+    private TargetGrid unitGrid;
 
-	private TargetGrid enemyGrid;
+    private TargetGrid enemyGrid;
 
-	private int unitCounter = 0;
+    private int unitCounter = 0;
 
-	private int currentStage = 0;
+    private int currentStage = 0;
 
-	private GJUnit currentUnit;
+    private GJUnit currentUnit;
 
-	private GJEnemy currentEnemy;
+    private GJEnemy currentEnemy;
 
-	private List<UnitData> units;
+    private List<UnitData> units;
 
-	private List<EnemyData> enemies;
+    private List<EnemyData> enemies;
 
-	private float time = 30.0f;
+    private float time = 30.0f;
 
-	private int whosAttacking;
+    private int whosAttacking;
 
-	private static final int ENEMY_TURN = 0;
+    private static final int ENEMY_TURN = 0;
 
-	private static final int PLAYER_TURN = 1;
+    private static final int PLAYER_TURN = 1;
 
-	private HealthBar healthUnits;
+    private HealthBar healthUnits;
 
-	private HealthBar healthEnemies;
+    private HealthBar healthEnemies;
 
-	private SHText battleResult;
+    private SHText battleResult;
 
-	private SHText timer;
+    private SHText timer;
 
-	private SHText next;
-	
-	private List<StageData> stages;
+    private SHText next;
+    
+    private SHText restart;
 
-	public BattleScreen(MyGdxGame game, TargetGrid unitGrid,
-			TargetGrid enemyGrid, GJActor background, List<StageData> stages) {
-		super(game);
-		Gdx.app.log("lem", "startedBattle");
-		this.stages = stages;
-		this.unitGrid = unitGrid;
-		this.enemyGrid = enemyGrid;
+    private List<StageData> stages;
 
-		units = new ArrayList<UnitData>();
+    public BattleScreen(MyGdxGame game, TargetGrid unitGrid, TargetGrid enemyGrid, GJActor background, List<StageData> stages) {
+        super(game);
+        Gdx.app.log("lem", "startedBattle");
+        this.stages = stages;
+        this.unitGrid = unitGrid;
+        this.enemyGrid = enemyGrid;
 
-		battleResult = new SHText("", MyGdxGame.WIDTH / 2,
-				MyGdxGame.HEIGHT / 2, SHText.Size.XXLARGE, Color.BLACK);
-		next = new SHText("Next Battle!", 0,0, SHText.Size.XXLARGE, Color.BLACK);
-		
-		next.addListener(new ClickListener(){
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				Gdx.app.log("lem", "pressed");
-				currentStage++;
-				setupStage();
-			}
-		});
-		
-		next.setPosition(MyGdxGame.WIDTH/2 - next.getWidth()/2, battleResult.getY()-next.getHeight());
-		
-		healthEnemies = new HealthBar();
-		healthUnits = new HealthBar();
-		
-		setupStage();
+        units = new ArrayList<UnitData>();
 
-		
-		healthUnits.setPosition(
-				MyGdxGame.WIDTH - healthUnits.getWidth() - 5.0f,
-				MyGdxGame.HEIGHT - healthUnits.getHeight() - 20.0f);
+        battleResult = new SHText("", MyGdxGame.WIDTH / 2, MyGdxGame.HEIGHT / 2, SHText.Size.XXLARGE, Color.BLACK);
+        
+        next = new SHText("Next Battle!", 0, 0, SHText.Size.XXLARGE, Color.BLACK);
+        restart = new SHText("Restart Battle!", 0,0, SHText.Size.XXLARGE, Color.BLACK);
+        
+        next.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                currentStage++;
+                setupStage();
+            }
+        });
+        
+        restart.addListener(new ClickListener(){
+           @Override
+        public void clicked(InputEvent event, float x, float y) {
+               setupStage();
+           } 
+        });
 
-		
-		healthEnemies.setPosition(enemyGrid.getX() + 5.0f, MyGdxGame.HEIGHT
-				- healthEnemies.getHeight() - 20.0f);
+        next.setPosition(MyGdxGame.WIDTH / 2 - next.getWidth() / 2, battleResult.getY() - next.getHeight());
+        restart.setPosition(MyGdxGame.WIDTH/2- restart.getWidth()/2,  next.getY() - restart.getHeight());
 
-		next.setVisible(false);
-		timer = new SHText("30", 0, 0, SHText.Size.XXLARGE, Color.BLACK);
+        healthEnemies = new HealthBar();
+        healthUnits = new HealthBar();
 
-		timer.setPosition(MyGdxGame.WIDTH / 2,
-				MyGdxGame.HEIGHT - timer.getHeight() - 20.0f);
+        setupStage();
 
-		unitGrid.setUpForBattle();
-		enemyGrid.setUpForBattle();
+        healthUnits.setPosition(MyGdxGame.WIDTH - healthUnits.getWidth() - 5.0f, MyGdxGame.HEIGHT - healthUnits.getHeight() - 20.0f);
 
-		for (Actor actor : unitGrid.getChildren()) {
-			if (((GJUnitGrid) (actor)).getUnit() != null) {
-				units.add((((GJUnitGrid) (actor)).getUnit().getUnitData()));
-			}
-		}
+        healthEnemies.setPosition(enemyGrid.getX() + 5.0f, MyGdxGame.HEIGHT - healthEnemies.getHeight() - 20.0f);
 
-		healthUnits.setPerfectHealth(getCurrentTotalHPUnit());
-		
+        next.setVisible(false);
+        restart.setVisible(false);
+        timer = new SHText("30", 0, 0, SHText.Size.XXLARGE, Color.BLACK);
 
-		stage.addActor(background);
-		stage.addActor(unitGrid);
-		stage.addActor(enemyGrid);
-		stage.addActor(healthUnits);
-		stage.addActor(healthEnemies);
-		stage.addActor(battleResult);
-		stage.addActor(timer);
-		stage.addActor(next);
-		
-		battleResult.setVisible(false);
+        timer.setPosition(MyGdxGame.WIDTH / 2, MyGdxGame.HEIGHT - timer.getHeight() - 20.0f);
 
-		showEnemyGrid();
-		whosAttacking = PLAYER_TURN;
-		
-		Gdx.input.setInputProcessor(stage);
-		
-	}
+        unitGrid.setUpForBattle();
+        enemyGrid.setUpForBattle();
 
-	private void showEnemyGrid() {
-		for (Actor actor : enemyGrid.getChildren()) {
-			actor.setVisible(true);
-		}
-	}
+        for (Actor actor : unitGrid.getChildren()) {
+            if (((GJUnitGrid) (actor)).getUnit() != null) {
+                units.add((((GJUnitGrid) (actor)).getUnit().getUnitData()));
+            }
+        }
 
-	@Override
-	public void render(float delta) {
-		super.render(delta);
-		
-		if (isAllEnemyDead()) {
-			battleResult.setText("BATTLE WON!");
-			battleResult
-					.setX(MyGdxGame.WIDTH / 2 - battleResult.getWidth() / 2);
-			battleResult.setY(MyGdxGame.HEIGHT / 2 + 100.0f);
-			next.setVisible(true);
-			battleResult.setVisible(true);
-		} else if (isAllUnitsDead()) {
-			battleResult.setText("BATTLE LOST!");
-			battleResult.setVisible(false);
-		} else {
-			time -= delta;
-			timer.setText(Integer.toString(Math.round(time)));
-			if (whosAttacking == PLAYER_TURN) {
+        healthUnits.setPerfectHealth(getCurrentTotalHPUnit());
 
-				if (currentUnit == null) {
-					currentUnit = (((GJUnitGrid) (unitGrid.getChildren()
-							.get(unitCounter))).getUnit());
-					unitCounter = currentUnit == null ? ++unitCounter
-							: unitCounter;
-				}
+        stage.addActor(background);
+        stage.addActor(unitGrid);
+        stage.addActor(enemyGrid);
+        stage.addActor(healthUnits);
+        stage.addActor(healthEnemies);
+        stage.addActor(battleResult);
+        stage.addActor(timer);
+        stage.addActor(next);
+        stage.addActor(restart);
 
-				if (currentUnit != null && !hasAnimationPlaying) {
-					if (currentUnit.getStatus() != GJAnimatingActor.ISDEAD) {
-						hasAnimationPlaying = true;
-						currentUnit.playAttackAnimation();
+        battleResult.setVisible(false);
 
-						FunctionHelper.doDamage(((GJUnitGrid) (unitGrid
-								.getChildren().get(unitCounter))), enemyGrid);
-						healthEnemies.updateHP(getCurrentTotalHPEnemy());
-						currentUnit.updateListener(new AnimationListener() {
-							@Override
-							public void onFinish() {
-								unitCounter++;
-								if (unitCounter < unitGrid.getChildren().size) {
-									currentUnit = (((GJUnitGrid) (unitGrid
-											.getChildren().get(unitCounter)))
-											.getUnit());
-								} else {
-									unitCounter = 0;
-									currentEnemy = null;
-									whosAttacking = ENEMY_TURN;
-								}
-								hasAnimationPlaying = false;
-							}
-						});
+        showEnemyGrid();
+        whosAttacking = PLAYER_TURN;
 
-					} else {
-						unitCounter++;
-						if (unitCounter < unitGrid.getChildren().size) {
-							currentUnit = (((GJUnitGrid) (unitGrid
-									.getChildren().get(unitCounter))).getUnit());
-						} else {
-							unitCounter = 0;
-							currentEnemy = null;
-							whosAttacking = ENEMY_TURN;
-						}
-						hasAnimationPlaying = false;
-					}
-				}
+        Gdx.input.setInputProcessor(stage);
 
-				if (unitCounter > unitGrid.getChildren().size - 1) {
-					unitCounter = 0;
-					currentEnemy = null;
-					whosAttacking = ENEMY_TURN;
-				}
-			}
+    }
 
-			else if (whosAttacking == ENEMY_TURN) {
-				if (currentEnemy == null) {
-					currentEnemy = (((GJUnitGrid) (enemyGrid.getChildren()
-							.get(unitCounter))).getEnemy());
-					unitCounter = currentEnemy == null ? ++unitCounter
-							: unitCounter;
-				}
+    private void showEnemyGrid() {
+        for (Actor actor : enemyGrid.getChildren()) {
+            actor.setVisible(true);
+        }
+    }
 
-				if (currentEnemy != null && !hasAnimationPlaying) {
-					if (currentEnemy.getStatus() != GJAnimatingActor.ISDEAD) {
-						hasAnimationPlaying = true;
-						currentEnemy.playAttackAnimation();
-						FunctionHelper.doDamage(((GJUnitGrid) (enemyGrid
-								.getChildren().get(unitCounter))), unitGrid);
-						healthUnits.updateHP(getCurrentTotalHPUnit());
-						currentEnemy.updateListener(new AnimationListener() {
-							@Override
-							public void onFinish() {
-								unitCounter++;
-								if (unitCounter < enemyGrid.getChildren().size) {
-									currentEnemy = (((GJUnitGrid) (enemyGrid
-											.getChildren().get(unitCounter)))
-											.getEnemy());
-								} else {
-									unitCounter = 0;
-									currentUnit = null;
-									whosAttacking = PLAYER_TURN;
-								}
-								hasAnimationPlaying = false;
-							}
-						});
-					} else {
-						unitCounter++;
-						if (unitCounter < enemyGrid.getChildren().size) {
-							currentEnemy = (((GJUnitGrid) (enemyGrid
-									.getChildren().get(unitCounter)))
-									.getEnemy());
-						} else {
-							unitCounter = 0;
-							currentUnit = null;
-							whosAttacking = PLAYER_TURN;
-						}
-						hasAnimationPlaying = false;
-					}
-				}
+    @Override
+    public void render(float delta) {
+        super.render(delta);
 
-				if (unitCounter > enemyGrid.getChildren().size - 1) {
-					unitCounter = 0;
-					currentUnit = null;
-					whosAttacking = PLAYER_TURN;
-				}
-			}
-		}
+        if (time<=0){
+            if (getCurrentTotalHPEnemy()>getCurrentTotalHPUnit()){
+                battleResult.setText("BATTLE LOST!");
+                battleResult.setVisible(true);
+            }
+            else{
+                battleResult.setText("BATTLE WON!");
+                battleResult.setX(MyGdxGame.WIDTH / 2 - battleResult.getWidth() / 2);
+                battleResult.setY(MyGdxGame.HEIGHT / 2 + 100.0f);
+                next.setVisible(true);
+                restart.setVisible(true);
+                battleResult.setVisible(true);
+            }
+        }
+        else if (isAllEnemyDead()) {
+            battleResult.setText("BATTLE WON!");
+            battleResult.setX(MyGdxGame.WIDTH / 2 - battleResult.getWidth() / 2);
+            battleResult.setY(MyGdxGame.HEIGHT / 2 + 100.0f);
+            next.setVisible(true);
+            restart.setVisible(true);
+            battleResult.setVisible(true);
+        } else if (isAllUnitsDead()) {
+            battleResult.setText("BATTLE LOST!");
+            battleResult.setVisible(true);
+            restart.setVisible(true);
+        } else {
+            time -= delta;
+            timer.setText(Integer.toString(Math.round(time)));
+            if (whosAttacking == PLAYER_TURN) {
 
-	}
+                if (currentUnit == null) {
+                    currentUnit = (((GJUnitGrid) (unitGrid.getChildren().get(unitCounter))).getUnit());
+                    unitCounter = currentUnit == null ? ++unitCounter : unitCounter;
+                }
 
-	private int getCurrentTotalHPEnemy() {
-		int total_hp = 0;
-		for (EnemyData enemyData : enemies) {
+                if (currentUnit != null && !hasAnimationPlaying) {
+                    if (currentUnit.getStatus() != GJAnimatingActor.ISDEAD) {
+                        hasAnimationPlaying = true;
+                        currentUnit.playAttackAnimation();
 
-			total_hp += enemyData.getHp() < 0 ? 0 : enemyData.getHp();
-		}
-		return total_hp;
-	}
+                        FunctionHelper.doDamage(((GJUnitGrid) (unitGrid.getChildren().get(unitCounter))), enemyGrid);
+                        healthEnemies.updateHP(getCurrentTotalHPEnemy());
+                        currentUnit.updateListener(new AnimationListener() {
+                            @Override
+                            public void onFinish() {
+                                unitCounter++;
+                                if (unitCounter < unitGrid.getChildren().size) {
+                                    currentUnit = (((GJUnitGrid) (unitGrid.getChildren().get(unitCounter))).getUnit());
+                                } else {
+                                    unitCounter = 0;
+                                    currentEnemy = null;
+                                    whosAttacking = ENEMY_TURN;
+                                }
+                                hasAnimationPlaying = false;
+                            }
+                        });
 
-	private int getCurrentTotalHPUnit() {
-		int total_hp = 0;
-		for (UnitData unitData : units) {
-			total_hp += unitData.getHp() < 0 ? 0 : unitData.getHp();
-		}
-		return total_hp;
-	}
+                    } else {
+                        unitCounter++;
+                        if (unitCounter < unitGrid.getChildren().size) {
+                            currentUnit = (((GJUnitGrid) (unitGrid.getChildren().get(unitCounter))).getUnit());
+                        } else {
+                            unitCounter = 0;
+                            currentEnemy = null;
+                            whosAttacking = ENEMY_TURN;
+                        }
+                        hasAnimationPlaying = false;
+                    }
+                }
 
-	private boolean isAllEnemyDead() {
-		return getCurrentTotalHPEnemy() <= 0;
-	}
+                if (unitCounter > unitGrid.getChildren().size - 1) {
+                    unitCounter = 0;
+                    currentEnemy = null;
+                    whosAttacking = ENEMY_TURN;
+                }
+            }
 
-	private boolean isAllUnitsDead() {
-		return getCurrentTotalHPUnit() <= 0;
-	}
+            else if (whosAttacking == ENEMY_TURN) {
+                if (currentEnemy == null) {
+                    currentEnemy = (((GJUnitGrid) (enemyGrid.getChildren().get(unitCounter))).getEnemy());
+                    unitCounter = currentEnemy == null ? ++unitCounter : unitCounter;
+                }
 
-	private void setupStage() {
-		enemyGrid.removeAllEnemies();
-		
-		StageData current_stage = stages.get(currentStage);
-		
-		enemies = null;
-		enemies = new ArrayList<EnemyData>();
-		
-		for (EnemyData enemy : current_stage.getEnemies()) {
-			enemies.add(enemy);
-			TextureAtlas enemyAtlas = new TextureAtlas(
-					Gdx.files.internal("enemies/" + enemy.getUnit_name()
-							+ "/preview.pack"));
-			TextureRegion region = enemyAtlas.findRegion("preview");
-			region.flip(true, false);
-			enemyGrid.addToSpecificGrid(enemy.getCoordinates(), new GJEnemy(
-					region, enemy));
-		}
-		
-		healthEnemies.setPerfectHealth(getCurrentTotalHPEnemy());
-		healthEnemies.updateHP(getCurrentTotalHPEnemy());
-		battleResult.setVisible(false);
-		next.setVisible(false);
-		time = 30.0f;
-		whosAttacking = PLAYER_TURN;
-		hasAnimationPlaying = false;
-	}
-	
-	
+                if (currentEnemy != null && !hasAnimationPlaying) {
+                    if (currentEnemy.getStatus() != GJAnimatingActor.ISDEAD) {
+                        hasAnimationPlaying = true;
+                        currentEnemy.playAttackAnimation();
+                        FunctionHelper.doDamage(((GJUnitGrid) (enemyGrid.getChildren().get(unitCounter))), unitGrid);
+                        healthUnits.updateHP(getCurrentTotalHPUnit());
+                        currentEnemy.updateListener(new AnimationListener() {
+                            @Override
+                            public void onFinish() {
+                                unitCounter++;
+                                if (unitCounter < enemyGrid.getChildren().size) {
+                                    currentEnemy = (((GJUnitGrid) (enemyGrid.getChildren().get(unitCounter))).getEnemy());
+                                } else {
+                                    unitCounter = 0;
+                                    currentUnit = null;
+                                    whosAttacking = PLAYER_TURN;
+                                }
+                                hasAnimationPlaying = false;
+                            }
+                        });
+                    } else {
+                        unitCounter++;
+                        if (unitCounter < enemyGrid.getChildren().size) {
+                            currentEnemy = (((GJUnitGrid) (enemyGrid.getChildren().get(unitCounter))).getEnemy());
+                        } else {
+                            unitCounter = 0;
+                            currentUnit = null;
+                            whosAttacking = PLAYER_TURN;
+                        }
+                        hasAnimationPlaying = false;
+                    }
+                }
+
+                if (unitCounter > enemyGrid.getChildren().size - 1) {
+                    unitCounter = 0;
+                    currentUnit = null;
+                    whosAttacking = PLAYER_TURN;
+                }
+            }
+        }
+
+    }
+
+    private int getCurrentTotalHPEnemy() {
+        int total_hp = 0;
+        for (EnemyData enemyData : enemies) {
+
+            total_hp += enemyData.getHp() < 0 ? 0 : enemyData.getHp();
+        }
+        return total_hp;
+    }
+
+    private int getCurrentTotalHPUnit() {
+        int total_hp = 0;
+        for (UnitData unitData : units) {
+            total_hp += unitData.getHp() < 0 ? 0 : unitData.getHp();
+        }
+        return total_hp;
+    }
+
+    private boolean isAllEnemyDead() {
+        return getCurrentTotalHPEnemy() <= 0;
+    }
+
+    private boolean isAllUnitsDead() {
+        return getCurrentTotalHPUnit() <= 0;
+    }
+
+    private void setupStage() {
+        enemyGrid.removeAllEnemies();
+
+        StageData current_stage = stages.get(currentStage);
+
+        enemies = null;
+        enemies = new ArrayList<EnemyData>();
+
+        for (EnemyData enemy : current_stage.getEnemies()) {
+            enemies.add(enemy);
+            TextureAtlas enemyAtlas = new TextureAtlas(Gdx.files.internal("enemies/" + enemy.getUnit_name() + "/preview.pack"));
+            TextureRegion region = enemyAtlas.findRegion("preview");
+            region.flip(true, false);
+            enemyGrid.addToSpecificGrid(enemy.getCoordinates(), new GJEnemy(region, enemy));
+        }
+
+        healthEnemies.setPerfectHealth(getCurrentTotalHPEnemy());
+        healthEnemies.updateHP(getCurrentTotalHPEnemy());
+        battleResult.setVisible(false);
+        next.setVisible(false);
+        restart.setVisible(false);
+        time = 30.0f;
+        whosAttacking = PLAYER_TURN;
+        hasAnimationPlaying = false;
+    }
 
 }

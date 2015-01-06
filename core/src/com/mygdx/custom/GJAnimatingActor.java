@@ -3,16 +3,15 @@ package com.mygdx.custom;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.mygdx.interfaces.AnimationListener;
 
 
-public class GJAnimatingActor extends GJClickableActor {
+public  abstract class GJAnimatingActor extends GJClickableActor {
     private AnimationListener animationListener;
 
     private boolean isAnimating = false;
@@ -49,15 +48,39 @@ public class GJAnimatingActor extends GJClickableActor {
     protected TextureRegion[] hurtFrames;
 
     protected TextureRegion[] deadFrames;
+    protected TextureRegion[] attackEffect;
 
     protected Animation attack;
 
     protected Animation hurt;
 
     protected Animation dead;
+    protected Animation effect;
+    
 
     public GJAnimatingActor(TextureRegion image) {
         super(image);
+    }
+    
+    protected void update(){
+        TextureAtlas effectAtlas = null;
+        switch(effectType()){
+        case 1:
+            effectAtlas = new TextureAtlas(Gdx.files.internal("effects/sword.pack"));
+            break;
+        case 2:
+            effectAtlas = new TextureAtlas(Gdx.files.internal("effects/fire.pack"));
+            break;
+        case 3:
+            effectAtlas = new TextureAtlas(Gdx.files.internal("effects/arrow.pack"));
+            break;
+        }
+        
+        attackEffect = new TextureRegion[effectAtlas.getRegions().size];
+        loadAnimationFrames(attackEffect, effectAtlas);
+        
+        effect = new Animation(0.15f, attackEffect);
+        effect.setPlayMode(PlayMode.NORMAL);
     }
 
     @Override
@@ -65,7 +88,9 @@ public class GJAnimatingActor extends GJClickableActor {
         // TODO Auto-generated method stub
 
     }
-
+    
+    protected abstract int effectType();
+    
     @Override
     public void draw(Batch batch, float parentAlpha) {
         if (movement == IDLE) {
@@ -76,6 +101,7 @@ public class GJAnimatingActor extends GJClickableActor {
             playAnimation(attack);
         } else if (movement == HURT) {
             playAnimation(hurt);
+            
         } else if (movement == DEAD) {
             playAnimation(dead);
         }
@@ -92,7 +118,6 @@ public class GJAnimatingActor extends GJClickableActor {
 
         if (animation.getAnimationDuration() <= expired) {
             if (animationListener != null && animation.equals(attack)) {
-                 
                 animationListener.onFinish();
             } else if (animation.equals(dead)) {
                  
@@ -104,6 +129,8 @@ public class GJAnimatingActor extends GJClickableActor {
             movement = IDLE;
         }
     }
+    
+    
 
     public void updateListener(AnimationListener animationListener) {
         this.animationListener = animationListener;
@@ -146,6 +173,10 @@ public class GJAnimatingActor extends GJClickableActor {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+    
+    public Animation getAttackEffectAnimation(){
+        return effect;
     }
 
 }

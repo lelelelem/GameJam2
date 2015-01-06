@@ -1,5 +1,4 @@
 package com.mygdx.custom;
-import com.badlogic.gdx.Gdx;
 import com.mygdx.screen.PreBattleScreen;
 
 
@@ -80,10 +79,14 @@ public class FunctionHelper {
             	 
             	 if (toAnimate!=null){
             	     if (toAnimate.getStatus()==GJAnimatingActor.ISDEAD){
+                         GJAnimatingActor actorAnimate = unitGrid.getEnemy()!=null?unitGrid.getEnemy(): unitGrid.getUnit();
+                         grid.startPlayAnimation(actorAnimate.getAttackEffectAnimation());    
             	         toAnimate.playDeadAnimation();
             	     }
             	     else{
-            	         toAnimate.playHurtAnimation();    
+            	         toAnimate.playHurtAnimation();
+            	         GJAnimatingActor actorAnimate = unitGrid.getEnemy()!=null?unitGrid.getEnemy(): unitGrid.getUnit();
+            	         grid.startPlayAnimation(actorAnimate.getAttackEffectAnimation());    
             	     }
             	 }
              }
