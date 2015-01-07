@@ -12,6 +12,7 @@ import com.mygdx.custom.GJScreen;
 import com.mygdx.custom.GJThumbnail;
 import com.mygdx.custom.GJThumbnail.GJClickListenerInterface;
 import com.mygdx.custom.GJUnit;
+import com.mygdx.custom.GJUnitGrid;
 import com.mygdx.custom.TargetGrid;
 import com.mygdx.data.EnemyData;
 import com.mygdx.data.StageData;
@@ -114,7 +115,8 @@ public class PreBattleScreen extends GJScreen{
             thumb.setX(spacing);
             spacing= thumb.getX() + (thumb.getWidth()*thumb.getScaleX()+50.0f); 
         }
-        
+      
+        enemyGrid.refreshGrid(0);
         
         unitThumbs.setWidth(spacing);
         unitThumbs.setX(MyGdxGame.WIDTH/2-unitThumbs.getWidth()/2);

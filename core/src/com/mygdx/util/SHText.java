@@ -31,7 +31,8 @@ public class SHText extends Label {
     }
 
     public static enum Font {
-        BEASTFORMER("fonts/Beastformer.ttf");
+        BEASTFORMER("fonts/Beastformer.ttf"),
+        BPREPLAY("fonts/BPReplay.otf");
 
         String fontName;
 

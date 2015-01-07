@@ -1,0 +1,26 @@
+
+mainmenu.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+background
+  rotate: false
+  xy: 1, 145
+  size: 700, 352
+  orig: 700, 352
+  offset: 0, 0
+  index: -1
+logo
+  rotate: false
+  xy: 1, 1
+  size: 523, 142
+  orig: 700, 352
+  offset: 87, 136
+  index: -1
+start
+  rotate: false
+  xy: 703, 463
+  size: 107, 34
+  orig: 700, 352
+  offset: 284, 44
+  index: -1

@@ -1,0 +1,33 @@
+
+backstory.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+background
+  rotate: false
+  xy: 1, 92
+  size: 700, 352
+  orig: 700, 352
+  offset: 0, 0
+  index: -1
+textBack
+  rotate: false
+  xy: 1, 1
+  size: 686, 89
+  orig: 700, 352
+  offset: 5, 7
+  index: -1
+Arnaud
+  rotate: false
+  xy: 703, 148
+  size: 380, 296
+  orig: 700, 352
+  offset: 320, 0
+  index: -1
+Fendrel
+  rotate: false
+  xy: 1085, 136
+  size: 219, 308
+  orig: 700, 352
+  offset: 7, 0
+  index: -1

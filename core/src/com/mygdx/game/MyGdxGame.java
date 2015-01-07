@@ -4,9 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.mygdx.interfaces.GJVolley;
-import com.mygdx.screen.MapScreen;
-import com.mygdx.screen.NetworkLoadingScreen;
-import com.mygdx.screen.PreBattleScreen;
+import com.mygdx.screen.MainMenu;
 
 public class MyGdxGame extends Game {
 
@@ -21,7 +19,7 @@ public class MyGdxGame extends Game {
     
 	@Override
 	public void create () {
-		this.setScreen(new NetworkLoadingScreen(this));
+		this.setScreen(new MainMenu(this));
 	}
 
 	@Override

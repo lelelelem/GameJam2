@@ -161,6 +161,7 @@ public class BattleScreen extends GJScreen {
             if (getCurrentTotalHPEnemy()>getCurrentTotalHPUnit()){
                 battleResult.setText("BATTLE LOST!");
                 battleResult.setVisible(true);
+                //send to gameover screen then after to main menu
             }
             else{
                 battleResult.setText("BATTLE WON!");
@@ -309,6 +310,11 @@ public class BattleScreen extends GJScreen {
     }
 
     private void setupStage() {
+        
+        if (currentStage >=stages.size()){
+            //add return to storyScreen
+        }
+        
         enemyGrid.removeAllEnemies();
 
         StageData current_stage = stages.get(currentStage);
