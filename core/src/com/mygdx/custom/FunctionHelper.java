@@ -1,9 +1,13 @@
 package com.mygdx.custom;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.mygdx.screen.PreBattleScreen;
 
 
 public class FunctionHelper {
 
+    private static final int ENEMY = 1;
+    private static final int UNIT = 0;
+    
     private FunctionHelper(){
         
     }
@@ -34,6 +38,8 @@ public class FunctionHelper {
     }
     
     public static void doDamage(GJUnitGrid unitGrid, TargetGrid targets){
+        boolean hasTarget = false;
+        
     	 String gridCoordinates[] = unitGrid.getName().split("-");
     	 int gridX = Integer.parseInt(gridCoordinates[0]);
          int gridY = Integer.parseInt(gridCoordinates[1]);
@@ -48,33 +54,25 @@ public class FunctionHelper {
              if (grid!=null){
                  GJAnimatingActor toAnimate = null;
                  if (grid.getUnit()!=null){
+                     hasTarget = true;
                      toAnimate = grid.getUnit();
                      
-                     if (toAnimate.getStatus()==GJAnimatingActor.ISDEAD)
+                     if (toAnimate.getStatus()==GJAnimatingActor.ISDEAD){
+                         hasTarget = false;
                          continue;
-                     
-                      
-                     grid.getUnit().getUnitData().setHp(computeDmg(unitGrid.getEnemy().getEnemyData().getAtk(), grid.getUnit().getUnitData().getDef(), grid.getUnit().getUnitData().getHp()));
-                     grid.showDamage(computeRealDmg(unitGrid.getEnemy().getEnemyData().getAtk(), grid.getUnit().getUnitData().getDef()));
-                    
-                     if (grid.getUnit().getUnitData().getHp()<=0){
-                         toAnimate.setStatus(GJAnimatingActor.ISDEAD);
-                          
                      }
-                     
+                     createDamage(UNIT, toAnimate, grid, unitGrid);
                  }
                  else if (grid.getEnemy()!=null){
+                     hasTarget = true;
+                     
                      toAnimate = grid.getEnemy();
-                     
-                     if (toAnimate.getStatus()==GJAnimatingActor.ISDEAD)
+                     if (toAnimate.getStatus()==GJAnimatingActor.ISDEAD){
+                         hasTarget = false;
                          continue;
-                     
-                     grid.getEnemy().getEnemyData().setHp(computeDmg(unitGrid.getUnit().getUnitData().getAtk(),  grid.getEnemy().getEnemyData().getDef(), grid.getEnemy().getEnemyData().getHp()));
-                     grid.showDamage(computeRealDmg(unitGrid.getUnit().getUnitData().getAtk(),  grid.getEnemy().getEnemyData().getDef()));
-                     if (grid.getEnemy().getEnemyData().getHp()<=0){
-                          
-                         toAnimate.setStatus(GJAnimatingActor.ISDEAD);
                      }
+                     createDamage(ENEMY, toAnimate, grid, unitGrid);
+                 
                  }
             	 
             	 if (toAnimate!=null){
@@ -91,6 +89,58 @@ public class FunctionHelper {
             	 }
              }
          }
+         
+         if (!hasTarget){
+             for (Actor target:targets.getChildren()){
+                 
+                 if (((GJUnitGrid)target).getUnit()!=null){
+                     GJAnimatingActor toAnimate = ((GJUnitGrid)target).getUnit();
+                     
+                     if (toAnimate.getStatus()==GJAnimatingActor.ISDEAD){
+                         continue;
+                     }
+                     
+                     createDamageForHalf(UNIT, toAnimate,  ((GJUnitGrid)target), unitGrid);
+                     
+                     if (toAnimate.getStatus()==GJAnimatingActor.ISDEAD){
+                         GJAnimatingActor actorAnimate = unitGrid.getEnemy()!=null?unitGrid.getEnemy(): unitGrid.getUnit();
+                         ((GJUnitGrid)target).startPlayAnimation(actorAnimate.getAttackEffectAnimation());    
+                         toAnimate.playDeadAnimation();
+                     }
+                     else{
+                         toAnimate.playHurtAnimation();
+                         GJAnimatingActor actorAnimate = unitGrid.getEnemy()!=null?unitGrid.getEnemy(): unitGrid.getUnit();
+                         ((GJUnitGrid)target).startPlayAnimation(actorAnimate.getAttackEffectAnimation());    
+                     }
+                     
+                     break;
+                 }
+                 
+                 if (((GJUnitGrid)target).getEnemy()!=null){
+                     GJAnimatingActor toAnimate = ((GJUnitGrid)target).getEnemy();
+                     
+                     if (toAnimate.getStatus()==GJAnimatingActor.ISDEAD){
+                         continue;
+                     }
+                     
+                     createDamageForHalf(ENEMY, toAnimate,  ((GJUnitGrid)target), unitGrid);
+                     
+                     if (toAnimate.getStatus()==GJAnimatingActor.ISDEAD){
+                         GJAnimatingActor actorAnimate = unitGrid.getEnemy()!=null?unitGrid.getEnemy(): unitGrid.getUnit();
+                         ((GJUnitGrid)target).startPlayAnimation(actorAnimate.getAttackEffectAnimation());    
+                         toAnimate.playDeadAnimation();
+                     }
+                     else{
+                         toAnimate.playHurtAnimation();
+                         GJAnimatingActor actorAnimate = unitGrid.getEnemy()!=null?unitGrid.getEnemy(): unitGrid.getUnit();
+                         ((GJUnitGrid)target).startPlayAnimation(actorAnimate.getAttackEffectAnimation());    
+                     }
+                     
+                     break;
+                 }
+             }
+         }
+         
     }
     
     private static String computeRealDmg(float attack_attacker, float def_target){
@@ -98,6 +148,48 @@ public class FunctionHelper {
     }
     private static int computeDmg(float attack_attacker, float def_target, float hp_target){
         return (int)(hp_target - (attack_attacker*((4000+def_target)/(4000+(def_target*10)))));
+    }
+    
+    private static void createDamage(int mode, GJAnimatingActor toAnimate, GJUnitGrid grid, GJUnitGrid unitGrid){
+        
+        if (mode==UNIT){
+            grid.getUnit().getUnitData().setHp(computeDmg(unitGrid.getEnemy().getEnemyData().getAtk(), grid.getUnit().getUnitData().getDef(), grid.getUnit().getUnitData().getHp()));
+            grid.showDamage(computeRealDmg(unitGrid.getEnemy().getEnemyData().getAtk(), grid.getUnit().getUnitData().getDef()));
+           
+            if (grid.getUnit().getUnitData().getHp()<=0){
+                toAnimate.setStatus(GJAnimatingActor.ISDEAD);
+            }
+        }
+        
+        else if (mode ==ENEMY){
+            grid.getEnemy().getEnemyData().setHp(computeDmg(unitGrid.getUnit().getUnitData().getAtk(),  grid.getEnemy().getEnemyData().getDef(), grid.getEnemy().getEnemyData().getHp()));
+            grid.showDamage(computeRealDmg(unitGrid.getUnit().getUnitData().getAtk(),  grid.getEnemy().getEnemyData().getDef()));
+            if (grid.getEnemy().getEnemyData().getHp()<=0){
+                 
+                toAnimate.setStatus(GJAnimatingActor.ISDEAD);
+            }
+        }
+       
+    }
+    
+    private static void createDamageForHalf(int mode, GJAnimatingActor toAnimate, GJUnitGrid grid, GJUnitGrid unitGrid){
+        if (mode==UNIT){
+            grid.getUnit().getUnitData().setHp(computeDmg(unitGrid.getEnemy().getEnemyData().getAtk()/2, grid.getUnit().getUnitData().getDef(), grid.getUnit().getUnitData().getHp()));
+            grid.showDamage(computeRealDmg(unitGrid.getEnemy().getEnemyData().getAtk()/2, grid.getUnit().getUnitData().getDef()));
+           
+            if (grid.getUnit().getUnitData().getHp()<=0){
+                toAnimate.setStatus(GJAnimatingActor.ISDEAD);
+            }
+        }
+        
+        else if (mode ==ENEMY){
+            grid.getEnemy().getEnemyData().setHp(computeDmg(unitGrid.getUnit().getUnitData().getAtk()/2,  grid.getEnemy().getEnemyData().getDef(), grid.getEnemy().getEnemyData().getHp()));
+            grid.showDamage(computeRealDmg(unitGrid.getUnit().getUnitData().getAtk()/2,  grid.getEnemy().getEnemyData().getDef()));
+            if (grid.getEnemy().getEnemyData().getHp()<=0){
+                 
+                toAnimate.setStatus(GJAnimatingActor.ISDEAD);
+            }
+        }
     }
     
 }

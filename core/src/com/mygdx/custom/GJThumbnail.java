@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.data.EnemyData;
 import com.mygdx.data.UnitData;
 import com.mygdx.interfaces.AnimationListener;
+import com.mygdx.screen.GJAssetmanager;
 
 /*Will hold Data 
  * such as:
@@ -61,7 +62,7 @@ public class GJThumbnail extends Group{
     
     
     public GJThumbnail(UnitData unitData, GJClickListenerInterface clickListener){
-        atlas = new TextureAtlas("units/"+unitData.getUnit_name()+"/preview.pack");
+        atlas = GJAssetmanager.get().getAnimationPacks("units/"+unitData.getUnit_name()+"/preview.pack");
         thumbUnit = new GJActor(atlas.findRegion("thumb"));
         this.setWidth(atlas.findRegion("thumb").getRegionWidth());
         this.setHeight(atlas.findRegion("thumb").getRegionHeight());
@@ -72,7 +73,7 @@ public class GJThumbnail extends Group{
     
     public GJThumbnail(EnemyData enemyData){
         //TODO: change to enemies
-        atlas = new TextureAtlas("enemies/"+enemyData.getUnit_name()+"/preview.pack");
+        atlas = GJAssetmanager.get().getAnimationPacks("enemies/"+enemyData.getUnit_name()+"/preview.pack");
         TextureRegion region = atlas.findRegion("thumb");
         TextureRegion enemyRegion = atlas.findRegion("preview");
         enemyRegion.flip(true, false);

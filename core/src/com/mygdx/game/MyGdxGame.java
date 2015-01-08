@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.mygdx.interfaces.GJVolley;
+import com.mygdx.screen.GJAssetmanager;
 import com.mygdx.screen.MainMenu;
 
 public class MyGdxGame extends Game {
@@ -15,6 +16,7 @@ public class MyGdxGame extends Game {
     
     public MyGdxGame(GJVolley volleyUtil){
         this.volleyUtil = volleyUtil;
+        GJAssetmanager.init();
     }
     
 	@Override

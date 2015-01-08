@@ -30,6 +30,7 @@ import com.mygdx.util.SHText;
 
 public class BattleScreen extends GJScreen {
 
+    private MyGdxGame game;
     private boolean hasAnimationPlaying = false;
 
     private TargetGrid unitGrid;
@@ -48,7 +49,7 @@ public class BattleScreen extends GJScreen {
 
     private List<EnemyData> enemies;
 
-    private float time = 30.0f;
+    private float time = 15.0f;
 
     private int whosAttacking;
 
@@ -72,6 +73,7 @@ public class BattleScreen extends GJScreen {
 
     public BattleScreen(MyGdxGame game, TargetGrid unitGrid, TargetGrid enemyGrid, GJActor background, List<StageData> stages) {
         super(game);
+        this.game = game;
         Gdx.app.log("lem", "startedBattle");
         this.stages = stages;
         this.unitGrid = unitGrid;
@@ -95,7 +97,7 @@ public class BattleScreen extends GJScreen {
         restart.addListener(new ClickListener(){
            @Override
         public void clicked(InputEvent event, float x, float y) {
-               setupStage();
+               restart();
            } 
         });
 
@@ -161,7 +163,7 @@ public class BattleScreen extends GJScreen {
             if (getCurrentTotalHPEnemy()>getCurrentTotalHPUnit()){
                 battleResult.setText("BATTLE LOST!");
                 battleResult.setVisible(true);
-                //send to gameover screen then after to main menu
+                restart.setVisible(true);
             }
             else{
                 battleResult.setText("BATTLE WON!");
@@ -338,6 +340,10 @@ public class BattleScreen extends GJScreen {
         time = 30.0f;
         whosAttacking = PLAYER_TURN;
         hasAnimationPlaying = false;
+    }
+    
+    private void restart(){
+        game.setScreen(new NetworkLoadingScreen(this.game));
     }
 
 }

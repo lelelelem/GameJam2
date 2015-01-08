@@ -79,7 +79,7 @@ public  abstract class GJAnimatingActor extends GJClickableActor {
         attackEffect = new TextureRegion[effectAtlas.getRegions().size];
         loadAnimationFrames(attackEffect, effectAtlas);
         
-        effect = new Animation(0.15f, attackEffect);
+        effect = new Animation(0.10f, attackEffect);
         effect.setPlayMode(PlayMode.NORMAL);
     }
 
@@ -138,7 +138,7 @@ public  abstract class GJAnimatingActor extends GJClickableActor {
 
     public void playAttackAnimation() {
         isAnimating = true;
-        attack = new Animation(0.05f, atkFrames);
+        attack = new Animation(0.03f, atkFrames);
         attack.setPlayMode(PlayMode.NORMAL);
         movement = ATTACKING;
     }
@@ -149,14 +149,14 @@ public  abstract class GJAnimatingActor extends GJClickableActor {
 
     public void playDeadAnimation() {
         isAnimating = true;
-        dead = new Animation(0.05f, deadFrames);
+        dead = new Animation(0.03f, deadFrames);
         dead.setPlayMode(PlayMode.NORMAL);
         movement = DEAD;
     }
 
     public void playHurtAnimation() {
         isAnimating = true;
-        hurt = new Animation(0.05f, hurtFrames);
+        hurt = new Animation(0.03f, hurtFrames);
         hurt.setPlayMode(PlayMode.NORMAL);
         movement = HURT;
     }

@@ -1,7 +1,7 @@
 
 hurt.png
 format: RGBA8888
-filter: Nearest,Nearest
+filter: Linear,Linear
 repeat: none
 5
   rotate: false
@@ -62,7 +62,7 @@ repeat: none
 
 hurt2.png
 format: RGBA8888
-filter: Nearest,Nearest
+filter: Linear,Linear
 repeat: none
 10
   rotate: false
@@ -109,7 +109,7 @@ repeat: none
 
 hurt3.png
 format: RGBA8888
-filter: Nearest,Nearest
+filter: Linear,Linear
 repeat: none
 15
   rotate: false

@@ -1,7 +1,7 @@
 
 attack.png
 format: RGBA8888
-filter: Nearest,Nearest
+filter: Linear,Linear
 repeat: none
 5
   rotate: false
@@ -118,7 +118,7 @@ repeat: none
 
 attack2.png
 format: RGBA8888
-filter: Nearest,Nearest
+filter: Linear,Linear
 repeat: none
 19
   rotate: false

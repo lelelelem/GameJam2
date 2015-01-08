@@ -1,5 +1,6 @@
 package com.mygdx.screen;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.badlogic.gdx.Gdx;
@@ -10,11 +11,10 @@ import com.mygdx.custom.GJActor;
 import com.mygdx.custom.GJClickableActor;
 import com.mygdx.custom.GJScreen;
 import com.mygdx.custom.GJThumbnail;
+import com.mygdx.custom.GJUnitGrid;
 import com.mygdx.custom.GJThumbnail.GJClickListenerInterface;
 import com.mygdx.custom.GJUnit;
-import com.mygdx.custom.GJUnitGrid;
 import com.mygdx.custom.TargetGrid;
-import com.mygdx.data.EnemyData;
 import com.mygdx.data.StageData;
 import com.mygdx.data.UnitData;
 import com.mygdx.final_values.AssetList;
@@ -38,6 +38,7 @@ public class PreBattleScreen extends GJScreen{
     private MyGdxGame game;
     
     private List<StageData> stages;
+    private List <UnitData> unitData;
     
     
     public PreBattleScreen(MyGdxGame game, List<UnitData> unitData, List<StageData> stages) {
@@ -45,6 +46,7 @@ public class PreBattleScreen extends GJScreen{
        
         this.stages = stages;
         this.game = game;
+        this.unitData = unitData;
         
         unitThumbs = new Group();
         unitThumbnail = new GJThumbnail[unitData.size()];
@@ -162,6 +164,40 @@ public class PreBattleScreen extends GJScreen{
     }
     
     private void toBattle(){
+        boolean hasNoUnits = true;
+        
+        for (Actor grid:unitGrid.getChildren()){
+            if(((GJUnitGrid)(grid)).getUnit()!=null){
+                hasNoUnits = false;
+                break;
+            }
+        }
+        
+        if (hasNoUnits){
+            placeInRandom();
+        }
+        
         game.setScreen(new BattleScreen(game, unitGrid, enemyGrid, background, stages));
     }
+    
+    private void placeInRandom(){
+        List<Integer> numberBlock = new ArrayList<Integer>();
+        int i=0;
+        
+        for (Actor actor:unitGrid.getChildren()){
+            numberBlock.add(i++);
+        }
+        
+        for(int x=0; x<unitThumbnail.length;x++ ){
+            int random = (int)(Math.random()*numberBlock.size());
+            Integer toRemove = numberBlock.get(random);
+            GJUnitGrid templ = (GJUnitGrid)unitGrid.getChildren().get(toRemove);
+            tempUnit = unitThumbnail[x].getUnit();
+            templ.addUnit();
+            numberBlock.remove(toRemove);   
+        }
+        
+        
+    }
+    
 }

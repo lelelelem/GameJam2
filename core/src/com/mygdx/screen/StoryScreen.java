@@ -23,7 +23,6 @@ public class StoryScreen extends GJScreen{
     private SHText name;
     private SHText saying;
     private SHText title;
-    
     private int ctr = 0;
     
     public StoryScreen(MyGdxGame game) {

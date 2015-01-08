@@ -3,6 +3,7 @@ package com.mygdx.custom;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.data.UnitData;
+import com.mygdx.screen.GJAssetmanager;
 
 public class GJUnit extends GJAnimatingActor {
 
@@ -15,11 +16,11 @@ public class GJUnit extends GJAnimatingActor {
 		
 		update();
 		
-		hurtSheet = new TextureAtlas("units/" + unitData.getUnit_name()
+		hurtSheet = GJAssetmanager.get().getAnimationPacks("units/" + unitData.getUnit_name()
 				+ "/hurt.pack");
-		atkSheet = new TextureAtlas("units/" + unitData.getUnit_name()
+		atkSheet = GJAssetmanager.get().getAnimationPacks("units/" + unitData.getUnit_name()
 				+ "/attack.pack");
-		deadSheet = new TextureAtlas("units/" + unitData.getUnit_name()
+		deadSheet =GJAssetmanager.get().getAnimationPacks("units/" + unitData.getUnit_name()
 				+ "/dead.pack");
 
 		atkFrames = new TextureRegion[atkSheet.getRegions().size];

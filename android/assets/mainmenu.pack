@@ -1,11 +1,11 @@
 
 mainmenu.png
 format: RGBA8888
-filter: Nearest,Nearest
+filter: Linear,Linear
 repeat: none
 background
   rotate: false
-  xy: 1, 145
+  xy: 1, 157
   size: 700, 352
   orig: 700, 352
   offset: 0, 0
@@ -13,14 +13,14 @@ background
 logo
   rotate: false
   xy: 1, 1
-  size: 523, 142
+  size: 700, 154
   orig: 700, 352
-  offset: 87, 136
+  offset: 0, 154
   index: -1
 start
   rotate: false
-  xy: 703, 463
-  size: 107, 34
+  xy: 703, 461
+  size: 193, 48
   orig: 700, 352
-  offset: 284, 44
+  offset: 236, 45
   index: -1

@@ -32,8 +32,9 @@ public class MainMenu extends GJScreen{
         stage.addActor(start);
         
         background.setScale(MyGdxGame.WIDTH/background.getWidth(), MyGdxGame.HEIGHT/background.getHeight());
-        
-        logo.setPosition(MyGdxGame.WIDTH/2 - logo.getWidth()/2, (MyGdxGame.HEIGHT/2 - logo.getHeight()/2)+20.0f);
+        logo.setScaleX(MyGdxGame.WIDTH/logo.getWidth());
+        logo.setScaleY(logo.getScaleX());
+        logo.setPosition(MyGdxGame.WIDTH/2 - logo.getWidth()*logo.getScaleX()/2, (MyGdxGame.HEIGHT/2 - logo.getHeight()/2)+20.0f);
         start.setPosition(MyGdxGame.WIDTH/2 - start.getWidth()/2, logo.getY() -start.getHeight()- 25.0f);
         
         start.addListener(new ClickListener(){
