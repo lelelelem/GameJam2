@@ -1,33 +1,40 @@
 
 backstory.png
 format: RGBA8888
-filter: Linear,Linear
+filter: Nearest,Nearest
 repeat: none
-background
+back1
   rotate: false
-  xy: 1, 92
-  size: 700, 352
-  orig: 700, 352
-  offset: 0, 0
+  xy: 1, 442
+  size: 696, 345
+  orig: 705, 352
+  offset: 9, 7
   index: -1
-textBack
+back2
+  rotate: false
+  xy: 1, 98
+  size: 690, 342
+  orig: 705, 352
+  offset: 7, 7
+  index: -1
+textback
   rotate: false
   xy: 1, 1
-  size: 686, 89
-  orig: 700, 352
-  offset: 5, 7
+  size: 688, 95
+  orig: 705, 352
+  offset: 0, 9
   index: -1
-Arnaud
+arnaund
   rotate: false
-  xy: 703, 148
-  size: 380, 296
-  orig: 700, 352
-  offset: 320, 0
+  xy: 699, 506
+  size: 210, 281
+  orig: 705, 352
+  offset: 430, 19
   index: -1
-Fendrel
+fendrel
   rotate: false
-  xy: 1085, 136
-  size: 219, 308
-  orig: 700, 352
-  offset: 7, 0
+  xy: 693, 175
+  size: 194, 265
+  orig: 705, 352
+  offset: 43, 22
   index: -1

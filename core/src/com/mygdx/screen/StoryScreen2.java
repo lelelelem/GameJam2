@@ -11,7 +11,7 @@ import com.mygdx.custom.GJScreen;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.util.SHText;
 
-public class StoryScreen extends GJScreen{
+public class StoryScreen2 extends GJScreen{
 
     private TextureAtlas backstoryAtlas;
     
@@ -25,18 +25,18 @@ public class StoryScreen extends GJScreen{
     private SHText title;
     private int ctr = 0;
     
-    public StoryScreen(MyGdxGame game) {
+    public StoryScreen2(MyGdxGame game) {
         super(game);
         
         backstoryAtlas = new TextureAtlas(Gdx.files.internal("backstory.pack"));
         
-        background = new GJActor(backstoryAtlas.findRegion("back1"));
+        background = new GJActor(backstoryAtlas.findRegion("back2"));
         textBg = new GJActor(backstoryAtlas.findRegion("textback"));
         
         arnaund = new GJActor(backstoryAtlas.findRegion("arnaund"));
         fendrel = new GJActor(backstoryAtlas.findRegion("fendrel"));
         
-        title = new SHText("The Kingdom of Vlad", SHText.Size.XXLARGE, SHText.Font.BPREPLAY, Color.BLACK);
+        title = new SHText("", SHText.Size.XXLARGE, SHText.Font.BPREPLAY, Color.BLACK);
         name = new SHText("Name", SHText.Size.MEDIUM, SHText.Font.BPREPLAY, Color.WHITE);
         saying = new SHText("Churva", SHText.Size.MEDIUM, SHText.Font.BPREPLAY, Color.WHITE);
         
@@ -65,7 +65,7 @@ public class StoryScreen extends GJScreen{
        name.setVisible(false);
        saying.setVisible(false);
        
-       title.addAction(Actions.sequence(Actions.fadeOut(0.0f), Actions.fadeIn(1.5f), Actions.fadeOut(1.0f), Actions.run(new Runnable() {
+       title.addAction(Actions.sequence(Actions.fadeOut(0.0f), Actions.fadeIn(0.5f), Actions.fadeOut(0.0f), Actions.run(new Runnable() {
         @Override
         public void run() {
            arnaund.setVisible(true);
@@ -89,35 +89,22 @@ public class StoryScreen extends GJScreen{
         switch (ctr){
         case 0:
             name.setText("Arnaund");
-            saying.setText("The Kingdom of Vlad. The smallest western kingdom.");
+            saying.setText("What Fools! This army is no match against our strength.");
             break;
         case 1:
             arnaund.setVisible(false);
             fendrel.setVisible(true);
             name.setText("Fendrel");
-            saying.setText("And the only kingdom we can possibly conquer.");
+            saying.setText("Do not be too full of yourself Arnaund. More are incoming!");
             break;
         case 2:
-            saying.setText("We would be fools to attack Vorin directly with the number and quality of units we have.");
-            break;
-        case 3:
             fendrel.setVisible(false);
             arnaund.setVisible(true);
             name.setText("Arnaund");
-            saying.setText("That bastard Malak, we will make him pay! He stole our kingdom. He will regret keeping us alive!");
+            saying.setText("Let them come! For today we make this kingdom ours!");
             break;
-        case 4:
-            arnaund.setVisible(false);
-            name.setText("Soldier");
-            saying.setText("Enemy Units incoming!");
-            break;
-        case 5:
-            arnaund.setVisible(true);
-            name.setText("Arnaund");
-            saying.setText("There goes our element of surprise. Units get in position!");
-            break;
-        case 6:
-            game.setScreen(new NetworkLoadingScreen(game));
+        case 3:
+            game.setScreen(new ToBeContinued(game));
         }
         saying.setWidth(textBg.getWidth());
         saying.setWrap(true);

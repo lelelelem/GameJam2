@@ -315,7 +315,7 @@ public class BattleScreen extends GJScreen {
     private void setupStage() {
         
         if (currentStage >=stages.size()){
-            //add return to storyScreen
+            game.setScreen(new StoryScreen2(game));
         }
         
         enemyGrid.removeAllEnemies();

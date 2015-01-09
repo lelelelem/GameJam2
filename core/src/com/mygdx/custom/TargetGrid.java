@@ -51,6 +51,7 @@ public class TargetGrid extends Group {
         for (Actor actor:this.getChildren()){
             actor.setX((this.getWidth()-(col*actor.getWidth())));
             actor.setY(this.getHeight()-(row*actor.getHeight()));
+            Gdx.app.log("lem", actor.getName()+" "+actor.getX()+", "+actor.getY());
             if (col==3){
                 col =1;
                 row++;

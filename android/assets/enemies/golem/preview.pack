@@ -1,19 +1,19 @@
 
 preview.png
 format: RGBA8888
-filter: Linear,Linear
+filter: Nearest,Nearest
 repeat: none
 preview
   rotate: false
-  xy: 1, 238
-  size: 448, 522
-  orig: 448, 522
-  offset: 0, 0
+  xy: 1, 296
+  size: 279, 568
+  orig: 398, 596
+  offset: 88, 1
   index: -1
 thumb
   rotate: false
   xy: 1, 1
-  size: 257, 235
-  orig: 257, 235
-  offset: 0, 0
+  size: 241, 293
+  orig: 398, 596
+  offset: 88, 276
   index: -1

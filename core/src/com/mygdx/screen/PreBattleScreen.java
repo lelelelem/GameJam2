@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
@@ -11,14 +12,15 @@ import com.mygdx.custom.GJActor;
 import com.mygdx.custom.GJClickableActor;
 import com.mygdx.custom.GJScreen;
 import com.mygdx.custom.GJThumbnail;
-import com.mygdx.custom.GJUnitGrid;
 import com.mygdx.custom.GJThumbnail.GJClickListenerInterface;
 import com.mygdx.custom.GJUnit;
+import com.mygdx.custom.GJUnitGrid;
 import com.mygdx.custom.TargetGrid;
 import com.mygdx.data.StageData;
 import com.mygdx.data.UnitData;
 import com.mygdx.final_values.AssetList;
 import com.mygdx.game.MyGdxGame;
+import com.mygdx.util.SHText;
 
 public class PreBattleScreen extends GJScreen{
     private GJThumbnail unitThumbnail[];
@@ -36,7 +38,7 @@ public class PreBattleScreen extends GJScreen{
     private GJUnit tempUnit;
     private boolean hasSelected = false;
     private MyGdxGame game;
-    
+    private SHText preBattle;
     private List<StageData> stages;
     private List<UnitData> unitData;
     
@@ -49,7 +51,8 @@ public class PreBattleScreen extends GJScreen{
         this.game = game;
         this.unitData = unitData;
         
-        
+        preBattle = new SHText("Pre-Battle Phase", SHText.Size.XXLARGE, SHText.Font.BEASTFORMER, Color.BLACK);
+        preBattle.setPosition(MyGdxGame.WIDTH/2 - preBattle.getWidth()/2, MyGdxGame.HEIGHT - preBattle.getHeight()-15.0f);
         unitThumbs = new Group();
         unitThumbnail = new GJThumbnail[this.unitData.size()];
         
@@ -71,7 +74,7 @@ public class PreBattleScreen extends GJScreen{
                toBattle();
             }
            };
-           battleIcon.setScale(1.3f);
+        battleIcon.setScale(1.3f);
         
         int i = 0;
         
@@ -100,6 +103,7 @@ public class PreBattleScreen extends GJScreen{
         stage.addActor(enemyGrid);
         stage.addActor(unitThumbs);
         stage.addActor(battleIcon);
+        stage.addActor(preBattle);
         
         enemyGrid.setX(0+20.0f);
         enemyGrid.setY(80.0f);
@@ -121,11 +125,14 @@ public class PreBattleScreen extends GJScreen{
         }
       
         enemyGrid.refreshGrid(0);
-        
+      
+        unitThumbs.setHeight(unitThumbnail[0].getHeight()*unitThumbnail[0].getScaleY());
         unitThumbs.setWidth(spacing);
         unitThumbs.setX(MyGdxGame.WIDTH/2-unitThumbs.getWidth()/2);
-        unitThumbs.setY(20.0f);
         
+        unitThumbs.setY(unitGrid.getY()+unitGrid.getHeight()+10.0f);
+       
+        battleIcon.setPosition(MyGdxGame.WIDTH/2 - battleIcon.getWidth()*battleIcon.getScaleX()/2, 20.0f);
          spacing = 0.0f;
         Gdx.input.setInputProcessor(stage);
     }

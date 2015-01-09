@@ -91,6 +91,7 @@ public class GJThumbnail extends Group{
     public void draw(Batch batch, float parentAlpha) {
         batch.setColor(1, 1, 1, alpha);
         super.draw(batch, parentAlpha);
+        batch.setColor(1, 1, 1, 1.0f);
     }
      
    private void makeTransparent(){
