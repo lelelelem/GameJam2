@@ -1,6 +1,7 @@
 
 package com.mygdx.screen;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
@@ -21,6 +22,11 @@ public class GJAssetmanager extends AssetManager {
         return myAssetManager;
     }
 
+    public void loadTextureAtlas(String filepath){
+        if (!myAssetManager.isLoaded(filepath))
+            myAssetManager.load(filepath, TextureAtlas.class);
+    }
+    
     public void loadAnimationPacks(String filepath) {
         if (!myAssetManager.isLoaded(filepath + "/attack.pack")) {
             myAssetManager.load(filepath + "/attack.pack", TextureAtlas.class);
@@ -40,7 +46,10 @@ public class GJAssetmanager extends AssetManager {
     public TextureAtlas getAnimationPacks(String filePath) {
         if (myAssetManager.isLoaded(filePath)) {
             return myAssetManager.get(filePath, TextureAtlas.class);
+        }else{
+            
         }
+        Gdx.app.log("lem","scomething is null");
         return null;
     }
 

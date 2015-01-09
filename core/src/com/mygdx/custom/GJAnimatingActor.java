@@ -9,9 +9,10 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.mygdx.interfaces.AnimationListener;
+import com.mygdx.screen.GJAssetmanager;
 
 
-public  abstract class GJAnimatingActor extends GJClickableActor {
+public   class GJAnimatingActor extends GJClickableActor {
     private AnimationListener animationListener;
 
     private boolean isAnimating = false;
@@ -66,13 +67,13 @@ public  abstract class GJAnimatingActor extends GJClickableActor {
         TextureAtlas effectAtlas = null;
         switch(effectType()){
         case 1:
-            effectAtlas = new TextureAtlas(Gdx.files.internal("effects/sword.pack"));
+            effectAtlas = GJAssetmanager.get().getAnimationPacks("effects/sword.pack");
             break;
         case 2:
-            effectAtlas = new TextureAtlas(Gdx.files.internal("effects/fire.pack"));
+            effectAtlas = GJAssetmanager.get().getAnimationPacks("effects/fire.pack");
             break;
         case 3:
-            effectAtlas = new TextureAtlas(Gdx.files.internal("effects/arrow.pack"));
+            effectAtlas = GJAssetmanager.get().getAnimationPacks("effects/arrow.pack");
             break;
         }
         
@@ -89,7 +90,10 @@ public  abstract class GJAnimatingActor extends GJClickableActor {
 
     }
     
-    protected abstract int effectType();
+    protected int effectType(){
+        return 1;
+    }
+    
     
     @Override
     public void draw(Batch batch, float parentAlpha) {

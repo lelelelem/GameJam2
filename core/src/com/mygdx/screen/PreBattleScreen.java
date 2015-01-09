@@ -38,21 +38,24 @@ public class PreBattleScreen extends GJScreen{
     private MyGdxGame game;
     
     private List<StageData> stages;
-    private List <UnitData> unitData;
+    private List<UnitData> unitData;
     
     
     public PreBattleScreen(MyGdxGame game, List<UnitData> unitData, List<StageData> stages) {
         super(game);
+        
        
         this.stages = stages;
         this.game = game;
         this.unitData = unitData;
         
+        
         unitThumbs = new Group();
-        unitThumbnail = new GJThumbnail[unitData.size()];
+        unitThumbnail = new GJThumbnail[this.unitData.size()];
         
        
         unitGrid = new TargetGrid(this);
+        
         enemyGrid = new  TargetGrid(this);
         
         ectAtlas = new TextureAtlas(AssetList.Assets.ATLAS_GAMESCREEN.getPath());
@@ -61,20 +64,19 @@ public class PreBattleScreen extends GJScreen{
         background.setWidth((MyGdxGame.WIDTH/background.getWidth())*background.getWidth());
         background.setHeight((MyGdxGame.HEIGHT/background.getHeight())*background.getHeight());
         
-        
-        battleIcon = new GJClickableActor(ectAtlas.findRegion(AssetList.Assets.ASSET_BATTLE_ICON.getPath())){
+
+        battleIcon = new GJClickableActor(new TextureAtlas(Gdx.files.internal("buttons.pack")).findRegion("battle")){
            @Override
             public void clickAction() {   
                toBattle();
             }
            };
-           
-           battleIcon.setScale(0.5f);
+           battleIcon.setScale(1.3f);
         
         int i = 0;
         
         //setup unit thumbs
-        for(UnitData unit: unitData){
+        for(UnitData unit: this.unitData){
             unitThumbnail[i] = new GJThumbnail(unit, new GJClickListenerInterface() {
                 @Override
                 public void onFocus() {
@@ -131,7 +133,6 @@ public class PreBattleScreen extends GJScreen{
     @Override
     public void render(float delta) {
         super.render(delta);
-       
         if(hasSelected){
             for (GJThumbnail thumb:unitThumbnail){
                 if (!thumb.isPressed()){

@@ -76,14 +76,12 @@ public class GJThumbnail extends Group{
         atlas = GJAssetmanager.get().getAnimationPacks("enemies/"+enemyData.getUnit_name()+"/preview.pack");
         TextureRegion region = atlas.findRegion("thumb");
         TextureRegion enemyRegion = atlas.findRegion("preview");
-        enemyRegion.flip(true, false);
         
         this.setWidth(atlas.findRegion("thumb").getRegionWidth());
         this.setHeight(atlas.findRegion("thumb").getRegionHeight());
         
         this.enemy = new GJEnemy(enemyRegion, enemyData);
         enemy.setScale(0.25f);
-        region.flip(true, false);
         
         thumbUnit = new GJActor(region);
         this.addActor(thumbUnit);

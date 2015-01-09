@@ -1,5 +1,7 @@
 package com.mygdx.game;
 
+import nativeUtils.NativeInterface;
+
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
@@ -12,9 +14,11 @@ public class MyGdxGame extends Game {
     public static final int HEIGHT = 480;
     public static final int WIDTH = 720;
     public GJVolley volleyUtil;
+    private NativeInterface nativeSupportInterface;
     
     
-    public MyGdxGame(GJVolley volleyUtil){
+    public MyGdxGame(GJVolley volleyUtil, NativeInterface nativeSupportInterface){
+        this.setNativeSupportInterface(nativeSupportInterface);
         this.volleyUtil = volleyUtil;
         GJAssetmanager.init();
     }
@@ -34,4 +38,12 @@ public class MyGdxGame extends Game {
 	public GJVolley getVolleyInstance(){
 	    return volleyUtil;
 	}
+
+    public NativeInterface getNativeSupportInterface() {
+        return nativeSupportInterface;
+    }
+
+    public void setNativeSupportInterface(NativeInterface nativeSupportInterface) {
+        this.nativeSupportInterface = nativeSupportInterface;
+    }
 }

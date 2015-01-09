@@ -65,9 +65,9 @@ public class BattleScreen extends GJScreen {
 
     private SHText timer;
 
-    private SHText next;
+    private GJActor next;
     
-    private SHText restart;
+    private GJActor restart;
 
     private List<StageData> stages;
 
@@ -83,9 +83,10 @@ public class BattleScreen extends GJScreen {
 
         battleResult = new SHText("", MyGdxGame.WIDTH / 2, MyGdxGame.HEIGHT / 2, SHText.Size.XXLARGE, Color.BLACK);
         
-        next = new SHText("Next Battle!", 0, 0, SHText.Size.XXLARGE, Color.BLACK);
-        restart = new SHText("Restart Battle!", 0,0, SHText.Size.XXLARGE, Color.BLACK);
-        
+        next = new GJActor(new TextureAtlas(Gdx.files.internal("buttons.pack")).findRegion("next"));
+        restart = new GJActor(new TextureAtlas(Gdx.files.internal("buttons.pack")).findRegion("restart"));
+        next.setScale(1.3f);
+        restart.setScale(1.3f);
         next.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -101,8 +102,8 @@ public class BattleScreen extends GJScreen {
            } 
         });
 
-        next.setPosition(MyGdxGame.WIDTH / 2 - next.getWidth() / 2, battleResult.getY() - next.getHeight());
-        restart.setPosition(MyGdxGame.WIDTH/2- restart.getWidth()/2,  next.getY() - restart.getHeight());
+        next.setPosition(MyGdxGame.WIDTH / 2 - next.getWidth()*next.getScaleX() / 2, battleResult.getY() - next.getHeight()*next.getScaleY());
+        restart.setPosition(MyGdxGame.WIDTH/2- restart.getWidth()*restart.getScaleX()/2,  next.getY() - restart.getHeight()*restart.getScaleY()-20.0f);
 
         healthEnemies = new HealthBar();
         healthUnits = new HealthBar();
@@ -328,7 +329,6 @@ public class BattleScreen extends GJScreen {
             enemies.add(enemy);
             TextureAtlas enemyAtlas = new TextureAtlas(Gdx.files.internal("enemies/" + enemy.getUnit_name() + "/preview.pack"));
             TextureRegion region = enemyAtlas.findRegion("preview");
-            region.flip(true, false);
             enemyGrid.addToSpecificGrid(enemy.getCoordinates(), new GJEnemy(region, enemy));
         }
 

@@ -1,8 +1,8 @@
 package com.mygdx.game.android;
 
+import nativeUtil.NativeSupport;
 import android.os.Bundle;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 import com.mygdx.game.MyGdxGame;
@@ -17,6 +17,6 @@ public class AndroidLauncher extends AndroidApplication {
 		VolleyUtil.init(this);
 		volleyUtil = VolleyUtil.getInstance();
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
-		initialize(new MyGdxGame(volleyUtil), config);
+		initialize(new MyGdxGame(volleyUtil, new NativeSupport(this)), config);
 	}
 }

@@ -5,15 +5,15 @@ filter: Linear,Linear
 repeat: none
 preview
   rotate: false
-  xy: 1, 243
-  size: 432, 514
-  orig: 472, 520
-  offset: 0, 4
+  xy: 1, 242
+  size: 428, 527
+  orig: 428, 528
+  offset: 0, 1
   index: -1
 thumb
   rotate: false
   xy: 1, 1
-  size: 217, 240
-  orig: 272, 240
-  offset: 55, 0
+  size: 215, 239
+  orig: 428, 528
+  offset: 32, 272
   index: -1

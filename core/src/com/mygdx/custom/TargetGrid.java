@@ -3,6 +3,7 @@ package com.mygdx.custom;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.mygdx.screen.PreBattleScreen;
 
 public class TargetGrid extends Group {
@@ -114,6 +115,7 @@ public class TargetGrid extends Group {
     
     public void setUpForBattle(){
         for(Actor actor:this.getChildren()){
+            actor.setTouchable(Touchable.disabled);
             ((GJUnitGrid)actor).hideTargetCircle();
         }
     }

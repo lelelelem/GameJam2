@@ -14,7 +14,7 @@ public abstract class GJVolley {
     protected List<EnemyData> enemyDAO;
     
     //needs to be implemented on android project
-    public abstract void createDAO(String url,  NetworkLoadingScreen loadScreen);
+    public abstract void createDAO(String url,  NetworkLoadingScreen loadScreen, VolleyResultListener volleyResultListener);
     
     public List<UnitData> getUnits(){
         return unitDAO;

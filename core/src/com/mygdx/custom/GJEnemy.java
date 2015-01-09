@@ -41,7 +41,6 @@ public class GJEnemy extends GJAnimatingActor {
     public void loadAnimationFrames(TextureRegion[] textureFrames, TextureAtlas atlas) {
         for (int x = 0; x < textureFrames.length; x++) {
             textureFrames[x] = atlas.findRegion(Integer.toString(x + 1));
-            textureFrames[x].flip(true, false);
         }
     }
 

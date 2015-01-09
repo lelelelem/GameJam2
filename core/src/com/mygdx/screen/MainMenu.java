@@ -1,6 +1,7 @@
 package com.mygdx.screen;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -21,11 +22,13 @@ public class MainMenu extends GJScreen{
         
         this.game = game;
         
+        
+        
         mainMenuAtlas = new TextureAtlas(Gdx.files.internal("mainmenu.pack"));
         
         logo = new GJActor(mainMenuAtlas.findRegion("logo"));
         background = new GJActor(mainMenuAtlas.findRegion("background"));
-        start = new GJActor(mainMenuAtlas.findRegion("start"));
+        start = new GJActor(new TextureAtlas(Gdx.files.internal("buttons.pack")).findRegion("start"));
         
         stage.addActor(background);
         stage.addActor(logo);
@@ -34,14 +37,15 @@ public class MainMenu extends GJScreen{
         background.setScale(MyGdxGame.WIDTH/background.getWidth(), MyGdxGame.HEIGHT/background.getHeight());
         logo.setScaleX(MyGdxGame.WIDTH/logo.getWidth());
         logo.setScaleY(logo.getScaleX());
-        logo.setPosition(MyGdxGame.WIDTH/2 - logo.getWidth()*logo.getScaleX()/2, (MyGdxGame.HEIGHT/2 - logo.getHeight()/2)+20.0f);
-        start.setPosition(MyGdxGame.WIDTH/2 - start.getWidth()/2, logo.getY() -start.getHeight()- 25.0f);
+        logo.setPosition(MyGdxGame.WIDTH/2 - logo.getWidth()*logo.getScaleX()/2, (MyGdxGame.HEIGHT/2 - logo.getHeight()/2)+35.0f);
+        start.setScale(1.3f);
+        start.setPosition(MyGdxGame.WIDTH/2 - start.getWidth()*start.getScaleX()/2, logo.getY() -start.getHeight()*start.getScaleX()- 110.0f);
         
         start.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
              toStoryScreen();
-            } 
+            }
         });
         
         Gdx.input.setInputProcessor(stage);

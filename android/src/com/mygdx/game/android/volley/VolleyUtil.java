@@ -24,6 +24,7 @@ import com.mygdx.data.EnemyData;
 import com.mygdx.data.StageData;
 import com.mygdx.data.UnitData;
 import com.mygdx.interfaces.GJVolley;
+import com.mygdx.interfaces.VolleyResultListener;
 import com.mygdx.screen.NetworkLoadingScreen;
 
 public class VolleyUtil extends GJVolley {
@@ -49,7 +50,7 @@ public class VolleyUtil extends GJVolley {
         
     }
     
-    public void createDAO(String url, final NetworkLoadingScreen loadScreen){
+    public void createDAO(String url, final NetworkLoadingScreen loadScreen,  final VolleyResultListener volleyResultListener){
         Log.i("lem", "connecting to "+url);
         
         if (requestQueue == null)
@@ -71,6 +72,7 @@ public class VolleyUtil extends GJVolley {
         }, new ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                volleyResultListener.onError();
                 Log.i("lem", "error " + error.getMessage());
             }
         });
